@@ -1,0 +1,311 @@
+// src/App.tsx
+
+import "./i18n";
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// import SunriseSunsetGauge from "./components/chart/sunStatusChart";
+// import UVIndexGauge from "./components/chart/uvIndex";
+// import WindSpeedChart from "./components/chart/windChart";
+import WeatherDetails from "./components/forcastDetails";
+import MapComponent from "./components/map";
+import Navbar from "./components/navbar";
+import Notification from "./components/notification";
+import {
+  FormattedWeatherData,
+  getFormattedWeatherData,
+} from "./hooks";
+import {
+  getCurrentDate,
+  getCurrentTime,
+} from "./utils/index";
+
+// Import WindSpeedChart component
+
+// interface TimeState {
+//   localDate: string;
+//   timeZone: string;
+// }
+const APIKEY = "f96518d739855003a31eb67440a5a6b7";
+const App: React.FC = () => {
+  const { t } = useTranslation();
+  const [city, setCity] = useState<string>("Ogbomoso");
+  const [weather, setWeather] = useState<FormattedWeatherData | null>(null);
+  // const [selectedDay, setSelectedDay] =
+  //   useState<FormattedWeeklyForecast | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>(getCurrentTime());
+  const [currentDate, setCurrentDate] = useState<string>(getCurrentDate());
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
+  const [unit, setUnit] = useState<"metric" | "imperial">("metric");
+  // const [timeZone, setTimezone] = useState<TimeState | undefined>(undefined);
+  // const [weeklyForecasts, setWeeklyForcasts] = useState<
+  //   FormattedWeeklyForecast[]
+  // >([]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(getCurrentTime());
+      setCurrentDate(getCurrentDate());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer); // Cleanup the interval on component unmount
+  }, []);
+
+  useEffect(() => {
+    // fetchWeather(city);
+    fetch(city);
+  }, [unit]);
+
+  const fetch = async (city: string) => {
+    try {
+      const data = await axios.get(
+        // `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=a72fa4cafa8eafb15a180f07ed918ba7` // 5 days forcast api
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}` // current forcast api
+        // `https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}` // weather map api
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchWeather = async (city: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await getFormattedWeatherData(city, unit);
+      setWeather(res.current);
+      // setWeeklyForcasts(res.forecast);
+      setNotification(`Weather updated for ${res.current.name}`);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.code === "ECONNABORTED") {
+        setError("Request timeout exceeded. Please try again.");
+      } else {
+        setError("Error fetching the weather data. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (city) {
+      fetchWeather(city);
+    }
+  };
+
+  // const getWeeklyForecast = (): { forecast: FormattedWeeklyForecast }[] => {
+  //   return weeklyForecasts.slice(0, 7).map((item) => ({ forecast: item }));
+  // };
+
+  return (
+    <>
+      <Navbar
+        setUnit={setUnit}
+        unit={unit}
+      />
+      <div className="grid grid-cols-4 gap-3 mt-12 max-w-screen-2xl mx-auto p-4">
+        <div className="grid col-span-3 border space-y-4">
+          <div className="flex gap-">
+            <div className=" border w-[35%] p-3">
+              <form onSubmit={handleSearch}>
+                <div className="flex items-center w-full">
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="p-2 border rounded-l w-full"
+                    placeholder={t("Search for a city...")}
+                  />
+                  <button
+                    type="submit"
+                    className="p-2 bg-blue-500 text-white rounded-r">
+                    {t("Search")}
+                  </button>
+                </div>
+              </form>
+              <div className="flex justify-cente">
+                <div className="shadow bg-gray-300 rounded-md w-full p-4 flex justify-cente items-center">
+                  {weather && (
+                    <div>
+                      <img
+                        className=""
+                        src={weather.iconURl}
+                        alt=""
+                      />
+                      <p className="text-[50px] font-bold">
+                        {weather.temp.toFixed()}°{unit === "metric" ? "C" : "F"}
+                      </p>
+                      <div className="flex items-center gap-1">
+                        <img
+                          className="h-8"
+                          src={weather.iconURl}
+                          alt=""
+                        />
+                        <p className="">{weather.description}</p>
+                      </div>
+                      <p className="">
+                        {weather.name}, {weather.country}
+                      </p>
+                      {/* {timeZone?.timeZone} */}
+                      <div className="text-center mb-4 flex gap-3 text-xs font-bold">
+                        <p>{currentDate}</p>
+                        <p>{currentTime}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="w-[65%] border p-3">
+              <div className="grid grid-cols- gap-2 h-full">
+                {/* <div className="space-y-3">
+                  <div className="border rounded h-[60%]">
+                    <WindSpeedChart
+                      data={weeklyForecasts.map((item) => ({
+                        date: convertUnixTimestamp(item.date),
+                        speed: item.speed,
+                      }))}
+                    />
+                  </div>
+                  <div className="border rounded h-[30%]">
+                    <h2>{t("Humidity")}</h2>
+                  </div>
+                </div> */}
+                {/* <div className="space-y-3">
+                  <div className="border rounded h-[60%]">
+                    {weather && (
+                      <SunriseSunsetGauge
+                        sunrise={weather.sunrise}
+                        sunset={weather.sunset}
+                      />
+                    )}
+                  </div>
+                  <div className="border rounded h-[30%]">
+                    <h2>{t("Visibility")}</h2>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="border rounded h-[60%]">
+                    {weather && <UVIndexGauge uvIndex={weather.uvIndex} />}
+                  </div>
+                  <div className="border rounded h-[30%]">
+                    <h2>{t("Temperature")}</h2>
+                  </div>
+                </div> */}
+              </div>
+            </div>
+          </div>
+          <div className="w-full">
+            {/* <div className="w-[35%] border p-3">main forcast</div>
+            <div className="w-[65%] border p-3"> */}
+            {weather && (
+              <div className="mt-4">
+                <MapComponent
+                  lat={weather.lat}
+                  lon={weather.lon}
+                  city={weather.name}
+                />
+              </div>
+            )}
+            {/* </div> */}
+          </div>
+        </div>
+        <div className="grid border">
+          <WeatherDetails
+            weather={weather}
+            unit={unit}
+          />
+        </div>
+      </div>
+      {/* <div className="min-h-screen mt-10">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl">{t("Weather App")}</h1>
+        </div>
+        <div className="grid grid-cols-4">
+          <div className="grid col-span-3 border">
+            <div className="grid grid-cols-2">
+              <div>
+                <div className="w-full max-w-4xl">
+                  <h2 className="text-2xl mb-4">{t("Weekly Forecast")}</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
+                    {getWeeklyForecast().map((item, index) => (
+                      <div
+                        key={index}
+                        className="p-4 bg-white rounded shadow cursor-pointer"
+                        onClick={() => setSelectedDay(item.forecast)}>
+                        <p>{item.forecast.description}</p>
+                        <p>
+                          {item.forecast.temp_max.toFixed()}°
+                          {unit === "metric" ? "C" : "F"}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="border">
+              {selectedDay && (
+                <div className="mt-4 p-4 bg-white rounded shadow">
+                  <h2 className="text-2xl mb-2">
+                    {new Date(selectedDay.date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </h2>
+                  <p className="text-lg">
+                    {t("Description")}: {selectedDay.description}
+                  </p>
+                  <p className="text-lg">
+                    {t("Temperature")}: {selectedDay.temp_max.toFixed()}°
+                    {unit === "metric" ? "C" : "F"}
+                  </p>
+                  <p className="text-lg">
+                    {t("Min Temperature")}: {selectedDay.temp_min.toFixed()}°
+                    {unit === "metric" ? "C" : "F"}
+                  </p>
+                  <p className="text-lg">
+                    {t("Max Temperature")}: {selectedDay.temp_max.toFixed()}°
+                    {unit === "metric" ? "C" : "F"}
+                  </p>
+                  <p className="text-lg">
+                    {t("Feels Like")}: {selectedDay.feels_like.toFixed()}°
+                    {unit === "metric" ? "C" : "F"}
+                  </p>
+                  <p className="text-lg">
+                    {t("Humidity")}: {selectedDay.humidity}%
+                  </p>
+                  <p className="text-lg">
+                    {t("Wind Speed")}: {selectedDay.speed}{" "}
+                    {unit === "metric" ? "m/s" : "mph"}
+                  </p>
+                  <p className="text-lg">
+                    {t("Pressure")}: {selectedDay.pressure} hPa
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="border p-3">
+            <WeatherDetails
+              weather={weather}
+              unit={unit}
+            />
+          </div>
+        </div>
+
+      </div> */}
+      {loading && "Loading...."}
+      {error && <p className="text-red-500">{error}</p>}
+      {notification && <Notification message={notification} />}
+    </>
+  );
+};
+
+export default App;
