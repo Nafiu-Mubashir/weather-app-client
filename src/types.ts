@@ -57,3 +57,20 @@ export interface Forecast {
     "3h"?: number;
   };
 }
+
+//Auth types
+export interface LoginFormValues {
+  email: string;
+  password: string;
+}
+export interface RegistrationFormValues {
+  firstname: string;
+  lastname: string;
+  city: string;
+  email: string;
+  password: string;
+}
+
+// export interface SearchFormValue {
+//   city: string;
+// }

@@ -1,15 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import { AppRoot, WorkingApp } from "./App";
 import ForgortPassword from "./pages/auth/forgortPassword";
 import Login from "./pages/auth/login";
 import Registration from "./pages/auth/registration";
 import ResetPassword from "./pages/auth/resetPassword";
+import Dashboard from "./pages/dashboard";
 import Error404 from "./pages/errors/404";
+import History from "./pages/history";
+import HomePage from "./pages/home";
 
-export const Router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "auth",
-    element: <AnonymousRoot />,
+    // element: <AnonymousRoot />,
     errorElement: <Error404 />,
     children: [
       {
@@ -30,19 +34,41 @@ export const Router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/",
-    element: <Root />,
+    element: <AppRoot />,
     errorElement: <Error404 />,
     children: [
       {
         index: true,
-        element: <Login />,
+        // path: "/",
+        element: <HomePage />,
       },
     ],
   },
   {
     path: "*", // Catch-all for undefined routes
     element: <Error404 />,
+  },
+
+  {
+    path: "dashboard",
+    element: <WorkingApp />,
+    errorElement: <Error404 />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "history",
+        element: <History />,
+      },
+      {
+        path: "map",
+        element: <History />,
+      },
+    ],
   },
 ]);

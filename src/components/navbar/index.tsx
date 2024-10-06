@@ -1,12 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-import logo3 from "../../assets/afro-logo.jpg";
-
-// import logo2 from "../../assets/afros-logo.jpg";
-// import logo4 from "../../assets/afrosun-logo.jpg";
-// import logo1 from '../../assets/logo.jpg'
-// import logo5 from "../../assets/logo.jpg"
-
 const Navbar = ({
   unit,
   setUnit,
@@ -15,36 +8,36 @@ const Navbar = ({
   setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
 }) => {
   const { t, i18n } = useTranslation();
+
   const toggleUnit = () => {
     setUnit((prevUnit: string) =>
       prevUnit === "metric" ? "imperial" : "metric"
     );
   };
 
-    const changeLanguage = (lng: string) => {
-      // console.log(lng);
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
-      i18n.changeLanguage(lng);
-    };
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img
-            src={logo3}
-            className="h-10 rounded-full"
-            alt="Flowbite Logo"
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600 w-full">
+      <div className="max-w-screen-x flex flex-col md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
+        {/* Search Input with animation */}
+        <div className="relative flex items-center">
+          <input
+            type="text"
+            className="p-2 border rounded-full h-9" // Expands to 14rem on hover or focus
+            placeholder={t("Search for a city...")}
           />
-          <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white]">
-            {t("Afro-centric Weather App")}
-          </span>
-        </a>
-        <div className="flex gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        </div>
+
+        {/* Unit Toggle and Language Selector */}
+        <div className="flex items-center gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto">
+          {/* Language Selector */}
           <select
             onChange={(e) => changeLanguage(e.target.value)}
-            className="p-2 border rounded">
+            className="p-2 border rounded h-9 w-full md:w-auto" // Full width on mobile, auto on larger screens
+          >
             <option value="en">En</option>
             <option value="fr">Fr</option>
             <option value="ha">Ha</option>
@@ -53,14 +46,28 @@ const Navbar = ({
             <option value="yo">Yo</option>
             <option value="zu">Zu</option>
           </select>
-          <button
-            type="button"
-            className="text-white p-2 bg-green-500 rounded focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-4 py-2 text-center"
+
+          {/* Unit Toggle */}
+          <div
+            className="flex border rounded-full transition-all duration-300 h-[2rem] w-full md:w-20" // Full width on mobile, fixed width on larger screens
             onClick={toggleUnit}>
-            {/* className=""> */}
-            {t("Toggle to")}{" "}
-            {unit === "metric" ? t("Fahrenheit") : t("Celsius")}
-          </button>
+            <button
+              className={
+                unit === "metric"
+                  ? "bg-white w-1/2 rounded-full uppercase"
+                  : "bg-[#060C1A] w-1/2 rounded-full"
+              }>
+              f
+            </button>
+            <button
+              className={
+                unit === "metric"
+                  ? "bg-[#060C1A] w-1/2 rounded-full"
+                  : "bg-white w-1/2 rounded-full uppercase"
+              }>
+              c
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -68,5 +75,3 @@ const Navbar = ({
 };
 
 export default Navbar;
-
-
