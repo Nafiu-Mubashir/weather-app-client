@@ -1,9 +1,9 @@
-import React from 'react'
+// import React from 'react'
 
-const SelectedDetails = () => {
-  return (
-    <div>SelectedDetails</div>
-  )
-}
+// const SelectedDetails = () => {
+//   return (
+//     <div>SelectedDetails</div>
+//   )
+// }
 
-export default SelectedDetails
+// export default SelectedDetails
