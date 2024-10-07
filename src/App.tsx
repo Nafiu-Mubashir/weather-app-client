@@ -38,7 +38,7 @@ function WorkingApp() {
 
   // Ensure the main scrolls and sidebar is fixed
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex dashBg">
       {/* Sidebar */}
       <div className="h-screen flex-shrink-0 border border-gray-300 ">
         <Sidebar

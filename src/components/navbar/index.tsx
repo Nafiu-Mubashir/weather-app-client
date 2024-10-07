@@ -20,7 +20,7 @@ const Navbar = ({
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600 w-full">
+    <nav className="bg-whit dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600 w-full">
       <div className="max-w-screen-x flex flex-col md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
         <div className="relative flex items-center">
@@ -32,7 +32,7 @@ const Navbar = ({
         </div>
 
         {/* Unit Toggle and Language Selector */}
-        <div className="flex items-center gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto">
+        <div className="flex items-center gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto text-black">
           {/* Language Selector */}
           <select
             onChange={(e) => changeLanguage(e.target.value)}
@@ -49,7 +49,7 @@ const Navbar = ({
 
           {/* Unit Toggle */}
           <div
-            className="flex border rounded-full transition-all duration-300 h-[2rem] w-full md:w-20" // Full width on mobile, fixed width on larger screens
+            className="flex border rounded-full transition-all duration-300 h-[2rem] w-full md:w-20 bg-white" // Full width on mobile, fixed width on larger screens
             onClick={toggleUnit}>
             <button
               className={

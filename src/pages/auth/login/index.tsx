@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import axiosInstance from "../../../api";
+import LoginBg from "../../../assets/rainBg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
 import { useCtxt } from "../../../context/authContext/userContext";
@@ -30,8 +31,10 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-yellow-500">
-      <div className="grid grid-rows-1 md:grid-cols-2 md:w-[70%] h-[85vh] m-auto p-3">
+    <div
+      className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${LoginBg})` }}>
+      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-[85vh] m-auto p-3">
         <div className="bg-white rounded-l-xl login bg-repeat bg-center bg-cover hidden md:block">
           {/* Image for the left section if needed */}
         </div>
@@ -50,7 +53,10 @@ const Login: React.FC = () => {
                   toast.success(res?.data?.message);
 
                   // Log the user in by calling the context's login method
-                  authContext?.login(res?.data?.payload.token, res?.data?.payload.user); // Assuming API returns token and user data
+                  authContext?.login(
+                    res?.data?.payload.token,
+                    res?.data?.payload.user
+                  ); // Assuming API returns token and user data
 
                   // Redirect to dashboard
                   navigate("/dashboard");
@@ -102,7 +108,7 @@ const Login: React.FC = () => {
             I do not have an account;{" "}
             <Link
               to="/auth/registration"
-              className="text-[#D13900] underline">
+              className="text-yellow-500 underline">
               Create an account
             </Link>
           </p>

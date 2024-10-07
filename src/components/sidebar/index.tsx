@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: (
         <House
           size={20}
-          color="#3e3d3b"
+          color="white"
         />
       ),
       name: "Dashboard",
@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: (
         <FileText
           size={20}
-          color="#3e3d3b"
+          color="white"
         />
       ),
       name: "History",
@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: (
         <MapTrifold
           size={20}
-          color="#3e3d3b"
+          color="white"
         />
       ),
       name: "Map",
@@ -98,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   } gap-4 p-2 rounded group cursor-pointer ${
                     isActive
                       ? "bg-ihsan"
-                      : "hover:bg-black/40 hover:backdrop-blur-md hover:border hover:border-black/50 hover:text-white"
+                      : ""
                   }`}
                   onClick={
                     item.subLinks ? toggleUserManagementDropdown : undefined

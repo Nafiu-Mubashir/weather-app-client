@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import axiosInstance from "../../../api";
+import RegBg from "../../../assets/sunBg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
 import { RegistrationFormValues } from "../../../types";
@@ -32,25 +33,29 @@ const Registration: React.FC = () => {
   };
 
   return (
-    <div className="bg-yellow-500 flex justify-center items-center h-screen">
-      <div className="grid grid-cols-2 w-[70%] h-[85vh] m-auto">
+    <div
+      className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-screen"
+      style={{ backgroundImage: `url(${RegBg})` }}>
+      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-[85vh] m-auto p-3">
         <div className="bg-white rounded-l-xl reg bg-repeat bg-center bg-cover">
           {/* <img src={loginImage} alt="" /> */}
         </div>
-        <div className="backdrop-blur-sm bg-black/40 rounded-r-xl p-10 space-y-4 text-white">
-                <div>
-                  <h2 className="text-[2.5rem] font-bold">Create Account</h2>
-                  <p>Enter your personal details to create an account</p>
-                </div>
+        <div className="backdrop-blur-sm bg-black/40 rounded-r-xl p-5 md:p-10 space-y-4 text-white">
+          <div>
+            <h2 className="text-2xl md:text-[2.5rem] font-bold">
+              Create Account
+            </h2>
+            <p>Enter your personal details to create an account</p>
+          </div>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values) => {
-              const res = await axiosInstance.post("/register", values)
+              const res = await axiosInstance.post("/register", values);
               console.log(res); // Stop submitting state
               if (res?.data.success === true) {
                 toast.success(res?.data?.message);
-              }else{
+              } else {
                 toast.error(res?.data?.message);
               }
             }}>

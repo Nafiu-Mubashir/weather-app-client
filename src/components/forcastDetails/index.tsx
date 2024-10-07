@@ -99,7 +99,7 @@ const DailyForecast: React.FC = () => {
   return (
     <div className="daily-forecast-container">
       <h2 className="text-xl font-bold mb-4">Daily Forecast</h2>
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
         {dailyForecast.map((day, index) => (
           <div
             key={index}

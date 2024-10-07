@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 
+import heroBg from "../../assets/mountainBg.jpg";
+
 // Image Links (Replace with the actual images once downloaded)
-const heroBg = "https://yourlink.com/afro-bg.jpg";
+// const heroBg = "../../assets/mountainBg.jpg";
 const sunIcon = "https://yourlink.com/sun-icon.svg";
 const rainIcon = "https://yourlink.com/rain-icon.svg";
-const appShowcase = "https://yourlink.com/app-showcase.png";
 const logo = "https://yourlink.com/logo.png"; // Replace with your logo image link
 
 const HomePage = () => {
@@ -32,11 +33,11 @@ const HomePage = () => {
       </nav>
 
       {/* Hero Content */}
-      <div className="text-center text-white z-10 space-y-4 mt-10">
-        <h1 className="text-4xl md:text-6xl font-bold">
+      <div className="text-center text-white z-10 space-y-4 mt-10 p-2">
+        <h1 className="text-3xl md:text-6xl font-bold">
           Afro-Weather <span className="text-yellow-500">App</span>
         </h1>
-        <p className="text-lg md:text-xl font-medium max-w-3xl mx-auto">
+        <p className="text-md md:text-xl font-medium max-w-3xl mx-auto">
           Bringing accurate and reliable weather updates with an Afro-centric
           twist. Stay informed and plan ahead with a uniquely Afro experience.
         </p>
@@ -46,13 +47,6 @@ const HomePage = () => {
       </div>
 
       {/* App Showcase Image */}
-      <div className="absolute bottom-10 w-3/4 md:w-1/2 mx-auto">
-        <img
-          src={appShowcase}
-          alt="App Showcase"
-          className="w-full h-auto"
-        />
-      </div>
       <div className="absolute inset-0 bg-black/50"></div>
     </div>
   );
@@ -60,7 +54,7 @@ const HomePage = () => {
   // Features Section
   const Features = () => (
     <section className="bg-gray-100 py-10">
-      <div className="container mx-auto text-center space-y-8">
+      <div className="container mx-auto text-center space-y-8 p-3">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
           Why Choose Afro-Weather?
         </h2>

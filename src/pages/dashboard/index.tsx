@@ -1,5 +1,3 @@
-
-
 // const Dashboard = () => {
 //   return (
 //     <div className="p-3 w-full">
@@ -32,7 +30,6 @@ import { useCtxt } from "../../context/authContext/userContext";
 
 // import React, { useState } from "react";
 
-
 const Dashboard: React.FC = () => {
   // const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
@@ -42,16 +39,15 @@ const Dashboard: React.FC = () => {
 
   const { user } = useCtxt();
   console.log(user?.weatherData);
-  
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-center">
+    <div className="min-h-screen bg-gray-90 text-white p-4 flex flex-col md:flex-row justify-center">
       {/* Main Dashboard */}
-      <div className="flex-grow md:ml-4">
+      <div className="flex-grow md:ml-4 space-y-4">
         {/* Top Section */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Current Weather */}
-          <div className="bg-gray-800 p-6 rounded-lg md:w-[40%]">
+          <div className="bg-gray-800/50 p-6 rounded-lg lg:w-[40%]">
             <div className="flex justify-between">
               <h2 className="text-2xl">
                 {user?.weatherData.currentWeather.name},{" "}
@@ -92,55 +88,67 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Weather Highlights */}
-          <div className="bg-gray-800 p-6 rounded-lg md:w-[70%] space-y-3">
+          <div className="bg-gray-800/50 p-6 rounded-lg lg:w-[70%] space-y-3">
             <h3 className="text-xl mb-4">Today Highlight</h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-gray-700 p-4 rounded-lg">
+            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <p>Temperature</p>
-                <h3 className="text-2xl font-bold">
+                <div className=" flex items-center justify-between">
                   <Thermometer
                     size={32}
-                    color="#3e3d3b"
+                    color="white"
                     weight="fill"
                   />
-                  {user?.weatherData.currentWeather.main.feels_like.toFixed()}°C
-                </h3>
+                  <h3 className="text-2xl font-bold">
+                    {user?.weatherData.currentWeather.main.feels_like.toFixed()}
+                    °C
+                  </h3>
+                </div>
               </div>
-              <div className="bg-gray-700 p-4 rounded-lg">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <p>Humidity</p>
-                <h3 className="text-2xl font-bold">
+                <div className=" flex items-center justify-between">
                   <DropHalfBottom
                     size={32}
-                    color="#3e3d3b"
+                    color="white"
                     weight="fill"
                   />
-                  {user?.weatherData.currentWeather.main.humidity.toFixed()}%
-                </h3>
+                  <h3 className="text-2xl font-bold">
+                    {user?.weatherData.currentWeather.main.humidity.toFixed()}%
+                  </h3>
+                </div>
               </div>
-              <div className="bg-gray-700 p-4 rounded-lg">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <p>WindSpeed</p>
-                <h3 className="text-2xl font-bold">
+                <div className=" flex items-center justify-between">
                   <Wind
                     size={32}
-                    color="#3e3d3b"
+                    color="white"
                     weight="fill"
                   />
-                  {user?.weatherData.currentWeather.wind.speed.toFixed()}m/s
-                </h3>
+                  <h3 className="text-2xl font-bold">
+                    {user?.weatherData.currentWeather.wind.speed.toFixed()}m/s
+                  </h3>
+                </div>
               </div>
-              <div className="bg-gray-700 p-4 rounded-lg">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <p>Pressure</p>
-                <h3 className="text-2xl font-bold">
-                  {user?.weatherData.currentWeather.main.pressure.toFixed()}hPa
-                </h3>
+                <div className=" flex items-center justify-between">
+                  <h3 className="text-2xl font-bold">
+                    {user?.weatherData.currentWeather.main.pressure.toFixed()}
+                    hPa
+                  </h3>
+                </div>
               </div>
-              <div className="bg-gray-700 p-4 rounded-lg">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <p>Sea Level</p>
-                <h3 className="text-2xl font-bold">
-                  {user?.weatherData.currentWeather.main.sea_level}
-                </h3>
+                <div className=" flex items-center justify-between">
+                  <h3 className="text-2xl font-bold">
+                    {user?.weatherData.currentWeather.main.sea_level}
+                  </h3>
+                </div>
               </div>
-              <div className="bg-gray-700 p-4 rounded-lg">
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
                 <div>Sunrise</div>
                 <div>Sunset</div>
                 <div>Lemgth of day</div>
@@ -150,26 +158,10 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Week Forecast Section */}
-        <DailyForecast />
-
+        <div className="bg-gray-800/50 p-6 rounded-lg">
+          <DailyForecast />{" "}
+        </div>
         {/* Other Cities Section */}
-        {/* <div className="bg-gray-800 p-6 mt-4 rounded-lg">
-          <h3 className="text-xl mb-4">Other Cities</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-gray-700 p-4 rounded-lg">
-              <h4 className="text-lg">Algeria</h4>
-              <p>27°C, Cloudy</p>
-            </div>
-            <div className="bg-gray-700 p-4 rounded-lg">
-              <h4 className="text-lg">Cape Verde</h4>
-              <p>25°C, Sunny</p>
-            </div>
-            <div className="bg-gray-700 p-4 rounded-lg">
-              <h4 className="text-lg">Angola</h4>
-              <p>26°C, Rainy</p>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );
