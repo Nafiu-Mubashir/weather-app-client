@@ -64,8 +64,8 @@ export interface LoginFormValues {
   password: string;
 }
 export interface RegistrationFormValues {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   city: string;
   email: string;
   password: string;

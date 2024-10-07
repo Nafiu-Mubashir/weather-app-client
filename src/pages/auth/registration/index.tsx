@@ -10,8 +10,8 @@ import { RegistrationFormValues } from "../../../types";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required("Firstname is required"),
-  lastname: Yup.string().required("Lastname is required"),
+  firstName: Yup.string().required("Firstname is required"),
+  lastName: Yup.string().required("Lastname is required"),
   city: Yup.string().required("City is required"),
   email: Yup.string()
     .email("Invalid email address")
@@ -24,8 +24,8 @@ const validationSchema = Yup.object().shape({
 const Registration: React.FC = () => {
   // Initial values for the form
   const initialValues: RegistrationFormValues = {
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     city: "",
     email: "",
     password: "",
@@ -63,7 +63,7 @@ const Registration: React.FC = () => {
                     type="text"
                     placeholder="Enter your firstname"
                     errors={errors}
-                    {...getFieldProps("firstname")} // Use Formik's getFieldProps
+                    {...getFieldProps("firstName")} // Use Formik's getFieldProps
                   />
 
                   {/* Lastname Field */}
@@ -72,7 +72,7 @@ const Registration: React.FC = () => {
                     type="text"
                     placeholder="Enter your lastname"
                     errors={errors}
-                    {...getFieldProps("lastname")} // Use Formik's getFieldProps
+                    {...getFieldProps("lastName")} // Use Formik's getFieldProps
                   />
                 </div>
                 {/* city Field */}
