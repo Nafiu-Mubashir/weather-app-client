@@ -1,43 +1,18 @@
-import { MouseEvent, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import {
-  FileText,
-  House,
-  List,
-  MapTrifold,
-  SignOut,
-} from "@phosphor-icons/react";
+import { FileText, House, MapTrifold, SignOut } from "@phosphor-icons/react";
 
-// Define the types for props
-interface SidebarProps {
-  isSidebarCollapsed: boolean;
-  toggleSidebar: () => void;
-}
-
+// Define the NavLink interface
 interface NavLink {
   icon: JSX.Element;
   name: string;
   path: string;
-  subLinks?: {
-    name: string;
-    path: string;
-  }[];
   digit?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
-  isSidebarCollapsed,
-  toggleSidebar,
-}) => {
-  const [isUserManagementOpen, setIsUserManagementOpen] = useState(false);
+const Sidebar: React.FC = () => {
   const location = useLocation();
   const whenActive = location.pathname;
-
-  const toggleUserManagementDropdown = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsUserManagementOpen(!isUserManagementOpen);
-  };
 
   const mainNavlink: NavLink[] = [
     {
@@ -68,55 +43,38 @@ const Sidebar: React.FC<SidebarProps> = ({
         />
       ),
       name: "Map",
-      path: "/dashboard/map",
       digit: "10",
+      path: "/dashboard/map",
     },
   ];
 
   return (
     <aside
-      className={`bg-glass p-4 md:flex flex-col justify-between transition-all duration-300 hidden h-screen ${
-        isSidebarCollapsed ? "md:w-16 " : "w-[20%] "
-      }`}
-      // onMouseEnter={toggleSidebar}
-    >
-      <div className="space-y-4">
-        <List
-          size={25}
-          color="#3e3d3b"
-          onClick={toggleSidebar}
-          className="cursor-pointer"
-        />
-        <div className="flex flex-col mt-4 gap-1">
+      className={`bg-gray-800/50 p-2 lg:p-4  flex flex-row lg:flex-col items-center justify-between lg:h-screen lg:w-[15%] w-full h-auto lg:border-r border-b`}>
+      <div className="lg:space-y-4 w-full">
+        <div className="flex flex-row lg:flex-col gap-1 lg:mt-4 w-full justify-around lg:justify-start">
           {mainNavlink.map((item, index) => {
             const isActive = whenActive === item.path;
             return (
-              <div key={index}>
+              <div
+                key={index}
+                className="w-full lg:w-auto">
                 <div
-                  className={`flex items-center ${
-                    isSidebarCollapsed ? "justify-center" : "justify-between"
-                  } gap-4 p-2 rounded group cursor-pointer ${
-                    isActive
-                      ? "bg-ihsan"
-                      : ""
-                  }`}
-                  onClick={
-                    item.subLinks ? toggleUserManagementDropdown : undefined
-                  }>
+                  className={`flex items-center justify-between gap-4 p-2 rounded group cursor-pointer w-full ${
+                    isActive ? "bg-ihsan" : ""
+                  }`}>
                   <Link
                     to={item.path}
-                    className="flex items-center gap-2 flex-grow">
+                    className="flex items-center gap-2 w-full">
                     <div className={`${isActive ? "text-urise-main" : ""}`}>
                       {item.icon}
                     </div>
-                    {!isSidebarCollapsed && (
-                      <p
-                        className={`text-sm ${
-                          isActive ? "text-urise-main" : ""
-                        }`}>
-                        {item.name}
-                      </p>
-                    )}
+                    <p
+                      className={`text-sm ${
+                        isActive ? "text-urise-main" : "text-white"
+                      }`}>
+                      {item.name}
+                    </p>
                   </Link>
                 </div>
               </div>
@@ -124,19 +82,14 @@ const Sidebar: React.FC<SidebarProps> = ({
           })}
         </div>
       </div>
-      <div
-        className={`space-y-2 cursor-pointer ${
-          isSidebarCollapsed ? "text-center" : "p-2"
-        }`}>
+      <div className={`cursor-pointer hidden md:block`}>
         <p
-          className={`flex gap-1 items-center cursor-pointer ${
-            isSidebarCollapsed ? "justify-center" : ""
-          }`}>
+          className={`flex gap-1 items-center cursor-pointer lg:justify-start`}>
           <SignOut
             size={20}
-            color="#3e3d3b"
+            color="white"
           />
-          {!isSidebarCollapsed && "Logout"}
+          Logout
         </p>
       </div>
     </aside>

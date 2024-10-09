@@ -68,7 +68,7 @@ const App: React.FC = () => {
         // `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}&units=${units}` // current forcast api
         // `https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}` // weather map api
         // `https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&appid=${APIKEY}`
-        `http://api.openweathermap.org/data/2.5/air_pollution?lat=33.44&lon=-94.04&appid=${APIKEY}` //air pollution
+        `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${APIKEY}` //air pollution
       );
       console.log(data);
     } catch (error) {

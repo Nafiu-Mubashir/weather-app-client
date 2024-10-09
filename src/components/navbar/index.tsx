@@ -20,23 +20,23 @@ const Navbar = ({
   };
 
   return (
-    <nav className="bg-whit dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600 w-full">
-      <div className="max-w-screen-x flex flex-col md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
+    <nav className="border-b border-gray-200 w-full">
+      <div className="max-w-screen-x flex flex-col-reverse md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
-        <div className="relative flex items-center">
+        <div className="relativ flex items-center">
           <input
             type="text"
-            className="p-2 border rounded-full h-9" // Expands to 14rem on hover or focus
+            className="p-2 border rounded-full h-9 w-full" // Expands to 14rem on hover or focus
             placeholder={t("Search for a city...")}
           />
         </div>
 
         {/* Unit Toggle and Language Selector */}
-        <div className="flex items-center gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto text-black">
+        <div className="flex items-center justify-between gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto text-black">
           {/* Language Selector */}
           <select
             onChange={(e) => changeLanguage(e.target.value)}
-            className="p-2 border rounded h-9 w-full md:w-auto" // Full width on mobile, auto on larger screens
+            className="p-2 border rounded h-9 w-auto md:w-auto" // Full width on mobile, auto on larger screens
           >
             <option value="en">En</option>
             <option value="fr">Fr</option>
@@ -49,7 +49,7 @@ const Navbar = ({
 
           {/* Unit Toggle */}
           <div
-            className="flex border rounded-full transition-all duration-300 h-[2rem] w-full md:w-20 bg-white" // Full width on mobile, fixed width on larger screens
+            className="flex border rounded-full transition-all duration-300 h-[2rem] w-20 md:w-20 bg-white" // Full width on mobile, fixed width on larger screens
             onClick={toggleUnit}>
             <button
               className={

@@ -48,6 +48,7 @@ const Login: React.FC = () => {
             ) => {
               try {
                 const res = await axiosInstance.post("/login", values);
+console.log(res);
 
                 if (res?.data.success === true) {
                   toast.success(res?.data?.message);

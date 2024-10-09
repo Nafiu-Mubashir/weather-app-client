@@ -25,12 +25,8 @@ function AppRoot() {
 // WorkingApp component
 function WorkingApp() {
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
-
   const { isAuthenticated } = useCtxt();
+  console.log(isAuthenticated, "Token");
 
   if (!isAuthenticated) {
     return <Navigate to="/" />;
@@ -38,14 +34,11 @@ function WorkingApp() {
 
   // Ensure the main scrolls and sidebar is fixed
   return (
-    <div className="h-screen flex dashBg">
+    <div className="h-screen flex flex-col lg:flex-row dashBg max-w-screen-x">
       {/* Sidebar */}
-      <div className="h-screen flex-shrink-0 border border-gray-300 ">
-        <Sidebar
-          isSidebarCollapsed={isSidebarCollapsed}
-          toggleSidebar={toggleSidebar}
-        />
-      </div>
+      {/* <div className="lg:h-screen border border-gray-300 max-w-screen-x "> */}
+        <Sidebar />
+      {/* </div> */}
 
       {/* Main content area should be scrollable */}
       <main className="flex-grow overflow-y-auto">
@@ -58,6 +51,5 @@ function WorkingApp() {
     </div>
   );
 }
-
 
 export { WorkingApp, AppRoot };

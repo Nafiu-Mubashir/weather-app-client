@@ -9,11 +9,11 @@ import Dashboard from "./pages/dashboard";
 import Error404 from "./pages/errors/404";
 import History from "./pages/history";
 import HomePage from "./pages/home";
+import Map from "./pages/map";
 
 export const router = createBrowserRouter([
   {
     path: "auth",
-    // element: <AnonymousRoot />,
     errorElement: <Error404 />,
     children: [
       {
@@ -42,14 +42,9 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // path: "/",
         element: <HomePage />,
       },
     ],
-  },
-  {
-    path: "*", // Catch-all for undefined routes
-    element: <Error404 />,
   },
 
   {
@@ -67,8 +62,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "map",
-        element: <History />,
+        element: <Map />,
       },
     ],
+  },
+  {
+    path: "*", // Catch-all for undefined routes
+    element: <Error404 />,
   },
 ]);
