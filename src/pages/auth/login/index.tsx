@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     <div
       className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${LoginBg})` }}>
-      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-[85vh] m-auto p-3">
+      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-auto m-auto p-3">
         <div className="bg-white rounded-l-xl login bg-repeat bg-center bg-cover hidden md:block">
           {/* Image for the left section if needed */}
         </div>
@@ -66,6 +66,8 @@ console.log(res);
                 }
               } catch (error) {
                 toast.error("Login failed. Please try again.");
+                console.log(error);
+                
               }
 
               setSubmitting(false); // Reset the submitting state after form submission

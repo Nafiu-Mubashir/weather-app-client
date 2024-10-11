@@ -1,6 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { FileText, House, MapTrifold, SignOut } from "@phosphor-icons/react";
+
+import { useCtxt } from "../../context/authContext/userContext";
 
 // Define the NavLink interface
 interface NavLink {
@@ -47,6 +49,12 @@ const Sidebar: React.FC = () => {
       path: "/dashboard/map",
     },
   ];
+  const { logout } = useCtxt();
+  const navigate = useNavigate();
+  const logUserOut = () => {
+    logout();
+    navigate("/auth/login");
+  };
 
   return (
     <aside
@@ -84,7 +92,7 @@ const Sidebar: React.FC = () => {
       </div>
       <div className={`cursor-pointer hidden md:block`}>
         <p
-          className={`flex gap-1 items-center cursor-pointer lg:justify-start`}>
+          className={`flex gap-1 items-center cursor-pointer lg:justify-start`} onClick={logUserOut}>
           <SignOut
             size={20}
             color="white"

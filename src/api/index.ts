@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios";
+import axios from "axios";
 import { getCookie, removeCookie } from "typescript-cookie"; // Importing from typescript-cookie
 
 // Create an Axios instance
@@ -16,7 +12,7 @@ const axiosInstance = axios.create({
 
 // Request interceptor to add the token from cookies
 axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+  (config) => {
     // Ensure headers object exists
     config.headers = config.headers ?? {};
 
@@ -25,11 +21,11 @@ axiosInstance.interceptors.request.use(
 
     // If the token exists, attach it to the request headers
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
-  (error: AxiosError) => {
+  (error) => {
     // Handle request error
     return Promise.reject(error);
   }
@@ -37,11 +33,11 @@ axiosInstance.interceptors.request.use(
 
 // Response interceptor to handle errors globally
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response) => {
     // If the response is successful, just return it
     return response;
   },
-  (error: AxiosError) => {
+  (error) => {
     // If the error status is 401 (Unauthorized), handle token expiration
     if (error.response?.status === 401) {
       // Optionally, clear cookies or redirect to login

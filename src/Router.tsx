@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { AppRoot, WorkingApp } from "./App";
+import { WorkingApp } from "./App";
 import ForgortPassword from "./pages/auth/forgortPassword";
 import Login from "./pages/auth/login";
 import Registration from "./pages/auth/registration";
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <AppRoot />,
+    // element: <WorkingApp />,
     errorElement: <Error404 />,
     children: [
       {

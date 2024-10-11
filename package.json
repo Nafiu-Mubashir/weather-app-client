@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.3",
     "axios": "^1.7.2",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "@reduxjs/toolkit": "^2.2.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -37,9 +39,11 @@
     "postcss": "^8.4.38",
     "react-chartjs-2": "^5.2.0",
     "react-leaflet": "^4.2.1",
+    "react-redux": "^9.1.2",
     "react-router": "^6.26.1",
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.2.2",
     "typescript-cookie": "^1.0.6",

@@ -36,7 +36,7 @@ const Registration: React.FC = () => {
     <div
       className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-screen"
       style={{ backgroundImage: `url(${RegBg})` }}>
-      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-[85vh] m-auto p-3">
+      <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-auto m-auto p-3">
         <div className="bg-white rounded-l-xl reg bg-repeat bg-center bg-cover">
           {/* <img src={loginImage} alt="" /> */}
         </div>

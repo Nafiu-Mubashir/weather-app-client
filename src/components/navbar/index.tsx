@@ -1,4 +1,10 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+
+import { useCtxt } from "../../context/authContext/userContext";
+import { AppDispatch } from "../../lib";
+import { fetchWeatherData } from "../../lib/action";
 
 const Navbar = ({
   unit,
@@ -8,6 +14,26 @@ const Navbar = ({
   setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
 }) => {
   const { t, i18n } = useTranslation();
+    const { user } = useCtxt();
+ const [city, setCity] = useState<string>(user?.city || "");
+ const dispatch = useDispatch<AppDispatch>();
+ const loadWeatherData = (city: string) => {
+   dispatch(fetchWeatherData({ city }));
+ };
+ useEffect(() => {
+   //  loadWeatherData(city)
+   if (city) {
+     loadWeatherData(city); // Fetch weather data when city is set
+   }
+ }, [city]);
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (city) {
+      dispatch(fetchWeatherData({ city }));
+  }
+  
+}
 
   const toggleUnit = () => {
     setUnit((prevUnit: string) =>
@@ -24,11 +50,22 @@ const Navbar = ({
       <div className="max-w-screen-x flex flex-col-reverse md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
         <div className="relativ flex items-center">
-          <input
-            type="text"
-            className="p-2 border rounded-full h-9 w-full" // Expands to 14rem on hover or focus
-            placeholder={t("Search for a city...")}
-          />
+          <form onSubmit={handleSearch}>
+            <div className="flex items-center w-full">
+              <input
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="p-2 border rounded-full h-9 w-full text-black"
+                placeholder={t("Search for a city...")}
+              />
+              <button
+                type="submit"
+                className="p-2 bg-blue-500 text-white rounded-r">
+                {t("Search")}
+              </button>
+            </div>
+          </form>
         </div>
 
         {/* Unit Toggle and Language Selector */}

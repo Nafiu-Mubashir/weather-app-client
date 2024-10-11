@@ -1,33 +1,5 @@
-import { useCtxt } from "../../context/authContext/userContext";
+import { Forecast } from "../../types"; // Assuming Forecast is properly typed in your types file
 import { formatDate } from "../../utils";
-
-// Define the types for forecast data
-interface Weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-  iconUrl: string;
-}
-
-interface MainWeather {
-  temp: number;
-  feels_like: number;
-  temp_min: number;
-  temp_max: number;
-  pressure: number;
-  humidity: number;
-}
-
-interface Forecast {
-  dt: number; // Timestamp
-  main: MainWeather;
-  weather: Weather[];
-  clouds: { all: number };
-  wind: { speed: number; deg: number; gust: number };
-  rain?: { "3h"?: number };
-  dt_txt: string; // Readable date and time
-}
 
 interface DailyForecastSummary {
   date: string;
@@ -39,19 +11,15 @@ interface DailyForecastSummary {
   time: string; // Time of the forecast entry
 }
 
-const DailyForecast: React.FC = () => {
-  const { user } = useCtxt();
+interface DailyForecastProps {
+  forecast: Forecast[]; // The forecast prop is an array of Forecast objects
+}
 
-  // Ensure the user and forecast data exist
-  if (!user || !user.weatherData || !user.weatherData.forecast) {
+const DailyForecast: React.FC<DailyForecastProps> = ({ forecast }) => {
+  // Ensure the forecast data exists
+  if (!forecast || forecast.length === 0) {
     return <p>No forecast data available.</p>;
   }
-
-  // Extract forecast data from user context
-  const forecast: Forecast[] = user.weatherData.forecast;
-
-  // Helper function to format date and extract day of the week and time
-
 
   // Helper function to group forecasts by day
   const groupForecastByDay = (
@@ -78,7 +46,7 @@ const DailyForecast: React.FC = () => {
 
       // Use the first forecast entry for weather description, icon, day of the week, and time
       const weatherDescription = dayData[0].weather[0].description;
-      const weatherIcon = dayData[0].weather[0].iconUrl;
+      const weatherIcon = dayData[0].weather[0].icon;
       const { dayOfWeek, time } = formatDate(dayData[0].dt_txt);
 
       return {
@@ -87,7 +55,7 @@ const DailyForecast: React.FC = () => {
         minTemp,
         maxTemp,
         weatherDescription,
-        weatherIcon,
+        weatherIcon: `http://openweathermap.org/img/wn/${weatherIcon}.png`, // Construct icon URL
         time,
       };
     });
@@ -104,7 +72,7 @@ const DailyForecast: React.FC = () => {
           <div
             key={index}
             className="forecast-day bg-gray-800 text-white p-4 rounded-lg">
-            <h3 className="text-lg font-bold">{day.dayOfWeek.slice(0,3)}</h3>
+            <h3 className="text-lg font-bold">{day.dayOfWeek.slice(0, 3)}</h3>
             <p>{day.date}</p>
             <img
               src={day.weatherIcon}
@@ -113,8 +81,8 @@ const DailyForecast: React.FC = () => {
             />
             <p className="text-center capitalize">{day.weatherDescription}</p>
             <p className="text-center text-sm">
-              <span>Min: {Math.round(day.minTemp - 273.15)}°C</span> |{" "}
-              <span>Max: {Math.round(day.maxTemp - 273.15)}°C</span>{" "}
+              <span>Min: {Math.round(day.minTemp)}°C</span> |{" "}
+              <span>Max: {Math.round(day.maxTemp)}°C</span>{" "}
               {/* Converting from Kelvin to Celsius */}
             </p>
             <p className="text-center mt-2">Time: {day.time}</p>
