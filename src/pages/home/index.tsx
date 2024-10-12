@@ -6,7 +6,7 @@ import heroBg from "../../assets/mountainBg.jpg";
 // const heroBg = "../../assets/mountainBg.jpg";
 const sunIcon = "https://yourlink.com/sun-icon.svg";
 const rainIcon = "https://yourlink.com/rain-icon.svg";
-const logo = "https://yourlink.com/logo.png"; // Replace with your logo image link
+// const logo = "https://yourlink.com/logo.png"; // Replace with your logo image link
 
 const HomePage = () => {
   // Hero Section with Navbar
@@ -17,11 +17,12 @@ const HomePage = () => {
       {/* Navbar */}
       <nav className="absolute top-0 left-0 w-full p-4 flex justify-between items-center bg-transparent z-20">
         <div className="flex items-center">
-          <img
+          {/* <img
             src={logo}
             alt="Afro-Weather Logo"
             className="h-10 md:h-14"
-          />
+          /> */}
+          <h1 className="text-xl md:text-3xl font-bold text-white"> Afro-Weather</h1>
         </div>
         <div>
           <Link to="/auth/login">
@@ -42,7 +43,7 @@ const HomePage = () => {
           twist. Stay informed and plan ahead with a uniquely Afro experience.
         </p>
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full font-semibold transition">
-          Get Started
+          <Link to={"/auth/login"}>Get Started</Link>
         </button>
       </div>
 

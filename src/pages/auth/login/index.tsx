@@ -5,10 +5,12 @@ import * as Yup from "yup";
 
 import axiosInstance from "../../../api";
 import LoginBg from "../../../assets/rainBg.jpg";
+import LoginImg from "../../../assets/reg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
 import { useCtxt } from "../../../context/authContext/userContext";
 import { LoginFormValues } from "../../../types";
+import { ArrowFatLeft } from "@phosphor-icons/react";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -32,10 +34,22 @@ const Login: React.FC = () => {
 
   return (
     <div
-      className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat"
+      className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat relative"
       style={{ backgroundImage: `url(${LoginBg})` }}>
+      <Link to={"/"}>
+        <button className="absolute bg-white top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
+          <ArrowFatLeft
+            size={26}
+            color="#3e3d3b"
+            weight="fill"
+          />
+          {/* Back */}
+        </button>
+      </Link>
       <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-auto m-auto p-3">
-        <div className="bg-white rounded-l-xl login bg-repeat bg-center bg-cover hidden md:block">
+        <div
+          className="bg-white rounded-l-xl login bg-repeat bg-center bg-cover hidden md:block"
+          style={{ backgroundImage: `url(${LoginImg})` }}>
           {/* Image for the left section if needed */}
         </div>
         <div className="bg-black/40 rounded-r-xl p-5 md:p-10">
@@ -48,7 +62,7 @@ const Login: React.FC = () => {
             ) => {
               try {
                 const res = await axiosInstance.post("/login", values);
-console.log(res);
+                console.log(res);
 
                 if (res?.data.success === true) {
                   toast.success(res?.data?.message);
@@ -67,7 +81,6 @@ console.log(res);
               } catch (error) {
                 toast.error("Login failed. Please try again.");
                 console.log(error);
-                
               }
 
               setSubmitting(false); // Reset the submitting state after form submission
@@ -98,7 +111,11 @@ console.log(res);
                   errors={errors}
                   {...getFieldProps("password")} // Use Formik's getFieldProps
                 />
-
+                {/* <Link
+                  to="/auth/reset-password"
+                  className="text-yellow-500 underline">
+                  Forget password?
+                </Link> */}
                 <Button
                   type="submit"
                   value={isSubmitting ? "Submitting..." : "Login"}

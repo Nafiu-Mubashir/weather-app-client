@@ -57,7 +57,7 @@ const Input: React.FC<InputProps> = ({
               {label}
             </label>
             <input
-              className="appearance-none block w-full backdrop-blur-sm bg-white/10 shadow-md text-white border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-transparent placeholder:text-white border-gray-400"
+              className="appearance-none block w-full backdrop-blur-sm bg-white/10 shadow-md text-white border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-transparent placeholder:text-gray-400 placeholder:text-sm border-gray-400"
               type={type}
               name={name}
               id={name}

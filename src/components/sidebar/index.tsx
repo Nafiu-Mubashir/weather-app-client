@@ -90,9 +90,10 @@ const Sidebar: React.FC = () => {
           })}
         </div>
       </div>
-      <div className={`cursor-pointer hidden md:block`}>
+      <div className={`cursor-pointer hidden md:block  w-full`}>
         <p
-          className={`flex gap-1 items-center cursor-pointer lg:justify-start`} onClick={logUserOut}>
+          className={`flex gap-1 items-center cursor-pointer lg:justify-start`}
+          onClick={logUserOut}>
           <SignOut
             size={20}
             color="white"

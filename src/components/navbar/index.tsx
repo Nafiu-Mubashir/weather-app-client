@@ -6,13 +6,14 @@ import { useCtxt } from "../../context/authContext/userContext";
 import { AppDispatch } from "../../lib";
 import { fetchWeatherData } from "../../lib/action";
 
-const Navbar = ({
-  unit,
-  setUnit,
-}: {
-  unit: string;
-  setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
-}) => {
+// {
+//   unit,
+//   setUnit,
+// }: {
+//   unit: string;
+//   setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
+// }
+const Navbar = () => {
   const { t, i18n } = useTranslation();
     const { user } = useCtxt();
  const [city, setCity] = useState<string>(user?.city || "");
@@ -35,11 +36,11 @@ const Navbar = ({
   
 }
 
-  const toggleUnit = () => {
-    setUnit((prevUnit: string) =>
-      prevUnit === "metric" ? "imperial" : "metric"
-    );
-  };
+  // const toggleUnit = () => {
+  //   setUnit((prevUnit: string) =>
+  //     prevUnit === "metric" ? "imperial" : "metric"
+  //   );
+  // };
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -47,7 +48,7 @@ const Navbar = ({
 
   return (
     <nav className="border-b border-gray-200 w-full">
-      <div className="max-w-screen-x flex flex-col-reverse md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
+      <div className="max-w-screen-x flex md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
         <div className="relativ flex items-center">
           <form onSubmit={handleSearch}>
@@ -56,12 +57,12 @@ const Navbar = ({
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="p-2 border rounded-full h-9 w-full text-black"
+                className="p-2 border rounded-l h-9 w-full text-black"
                 placeholder={t("Search for a city...")}
               />
               <button
                 type="submit"
-                className="p-2 bg-blue-500 text-white rounded-r">
+                className="p-[0.35rem] bg-blue-500 text-white rounded-r">
                 {t("Search")}
               </button>
             </div>
@@ -69,7 +70,7 @@ const Navbar = ({
         </div>
 
         {/* Unit Toggle and Language Selector */}
-        <div className="flex items-center justify-between gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-full md:w-auto text-black">
+        <div className="flex items-center justify-between gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-ful md:w-auto text-black">
           {/* Language Selector */}
           <select
             onChange={(e) => changeLanguage(e.target.value)}
@@ -85,7 +86,7 @@ const Navbar = ({
           </select>
 
           {/* Unit Toggle */}
-          <div
+          {/* <div
             className="flex border rounded-full transition-all duration-300 h-[2rem] w-20 md:w-20 bg-white" // Full width on mobile, fixed width on larger screens
             onClick={toggleUnit}>
             <button
@@ -104,7 +105,7 @@ const Navbar = ({
               }>
               c
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

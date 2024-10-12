@@ -5,9 +5,11 @@ import * as Yup from "yup";
 
 import axiosInstance from "../../../api";
 import RegBg from "../../../assets/sunBg.jpg";
+import LoginImg from "../../../assets/login.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
 import { RegistrationFormValues } from "../../../types";
+import { ArrowFatLeft } from "@phosphor-icons/react";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -34,11 +36,26 @@ const Registration: React.FC = () => {
 
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-screen"
+      className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-auto md:h-screen relative"
       style={{ backgroundImage: `url(${RegBg})` }}>
+      <Link to={"/"}>
+        <button className="absolute bg-white top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
+          <ArrowFatLeft
+            size={26}
+            color="#3e3d3b"
+            weight="fill"
+          />
+          {/* Back */}
+        </button>
+      </Link>
       <div className="grid grid-rows-1 md:grid-cols-2 lg:w-[70%] h-auto m-auto p-3">
-        <div className="bg-white rounded-l-xl reg bg-repeat bg-center bg-cover">
-          {/* <img src={loginImage} alt="" /> */}
+        <div
+          className="bg-whit rounded-l-xl reg bg-repeat bg-cente bg-cover"
+          style={{ backgroundImage: `url(${LoginImg})` }}>
+          {/* <img
+            src={LoginImg}
+            alt=""
+          /> */}
         </div>
         <div className="backdrop-blur-sm bg-black/40 rounded-r-xl p-5 md:p-10 space-y-4 text-white">
           <div>
@@ -61,7 +78,7 @@ const Registration: React.FC = () => {
             }}>
             {({ errors, getFieldProps, isSubmitting }) => (
               <Form className="space-y- text-white">
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
                   {/* Firstname Field */}
                   <Input
                     label="Firstname"
@@ -82,7 +99,7 @@ const Registration: React.FC = () => {
                 </div>
                 {/* city Field */}
                 <Input
-                  label="city"
+                  label="City"
                   type="text"
                   placeholder="Enter your city"
                   errors={errors}
