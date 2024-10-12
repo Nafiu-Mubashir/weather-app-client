@@ -47,8 +47,8 @@ function WorkingApp() {
       {/* Main content area should be scrollable */}
       <main className="flex-grow overflow-y-auto">
         <Navbar
-          setUnit={setUnit}
-          unit={unit}
+          // setUnit={setUnit}
+          // unit={unit}
         />
         <Outlet />
       </main>
