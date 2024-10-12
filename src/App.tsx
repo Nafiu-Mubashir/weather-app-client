@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Outlet } from "react-router";
 
 import Navbar from "./components/navbar";
@@ -28,7 +28,7 @@ import Sidebar from "./components/sidebar/index";
 
 // WorkingApp component
 function WorkingApp() {
-  const [unit, setUnit] = useState<"metric" | "imperial">("metric");
+  // const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   // const { isAuthenticated, user } = useCtxt();
   // console.log(isAuthenticated, "Token");
 
