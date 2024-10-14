@@ -69,7 +69,7 @@ const Registration: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={async (values) => {
               const res = await axiosInstance.post("/register", values);
-              console.log(res); // Stop submitting state
+              // console.log(res); // Stop submitting state
               if (res?.data.success === true) {
                 toast.success(res?.data?.message);
               } else {

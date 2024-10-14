@@ -1,59 +1,42 @@
-// import { useState } from "react";
-import { Outlet } from "react-router";
-
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router";
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar/index";
+import { RootState } from "./lib";
 
-// import { useCtxt } from "./context/authContext/userContext";
+// AuthRoot component for unauthenticated routes (login, registration, etc.)
+function AuthRoot() {
+  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
 
-// AppRoot component
-// function AppRoot() {
-//   const { isAuthenticated, checkAuthFromCookies, user } = useCtxt();
-//   const location = useLocation();
+  // If logged in, redirect to dashboard
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" />;
+  }
 
-//   useEffect(() => {
-//     // Check if the user is authenticated from cookies on mount
-//     checkAuthFromCookies();
-//   }, []);
+  return <Outlet />; // Render child routes (login, register, etc.)
+}
 
-//   if (!isAuthenticated && location.pathname !== "/") {
-//     return <Navigate to="/" />;
-//   }
-
-//   if (isAuthenticated && user) {
-//     return <Navigate to="/dashboard" />;
-//   }
-//   return <Outlet />;
-// }
-
-// WorkingApp component
+// WorkingApp component for authenticated routes (dashboard, etc.)
 function WorkingApp() {
-  // const [unit, setUnit] = useState<"metric" | "imperial">("metric");
-  // const { isAuthenticated, user } = useCtxt();
-  // console.log(isAuthenticated, "Token");
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.authSlice);
 
-  // if (isAuthenticated && user) {
-  //   return <Navigate to="/" />;
-  // }
+  // Redirect to login if not logged in
+  if (!isLoggedIn && !user) {
+    return <Navigate to="/auth/login" />;
+  }
 
-  // Ensure the main scrolls and sidebar is fixed
+  // Render sidebar, navbar, and child routes for authenticated pages
   return (
     <div className="h-screen flex flex-col lg:flex-row dashBg max-w-screen-x">
-      {/* Sidebar */}
-      {/* <div className="lg:h-screen border border-gray-300 max-w-screen-x "> */}
-        <Sidebar />
-      {/* </div> */}
+      <Sidebar />
 
       {/* Main content area should be scrollable */}
       <main className="flex-grow overflow-y-auto">
-        <Navbar
-          // setUnit={setUnit}
-          // unit={unit}
-        />
+        <Navbar />
         <Outlet />
       </main>
     </div>
   );
 }
 
-export { WorkingApp,};
+export { WorkingApp, AuthRoot };

@@ -1,21 +1,17 @@
+// /src/lib/store.tsx
+
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-
-import {
-  Action,
-  ThunkAction,
-  configureStore,
-  // getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 
 import rootReducer from "./reducer";
 
 // Create a persist configuration
 const persistConfig = {
   key: "root", // key for the persisted state
-  storage, // localStorage will be used
-  whitelist: ["weather"], // Add the slice names that you want to persist
+  storage, // Use localStorage for persistence
+  whitelist: ["weatherSlice", ""], // Persist both weather and auth slices
 };
 
 // Create a persisted reducer using the persistConfig and rootReducer
@@ -40,7 +36,7 @@ export const store = configureStore({
     }),
 });
 
-// Create the persistor
+// Create the persistor for use in PersistGate
 export const persistor = persistStore(store);
 
 // Types for the store
@@ -52,4 +48,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+// Typed selector hook for using throughout your app
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

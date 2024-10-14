@@ -102,7 +102,6 @@ export interface User {
   firstName: string;
   lastName: string;
   city: string;
-  searchHistory: History;
 }
 //Auth types
 export interface LoginFormValues {
@@ -133,4 +132,22 @@ export interface DashboardResponse {
     payload: WeatherRepose;
     success: string;
   };
+}
+
+export interface AuthRes {
+  success: boolean;
+  message: string;
+  payload: {
+    token: string;
+    user: User;
+  }
+}
+
+export interface UserState {
+  loading: boolean;
+  error: string | null;
+  success: string | null;
+  user: User | null;
+  isLoggedIn: boolean;
+  token: string | null;
 }

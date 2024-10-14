@@ -1,47 +1,58 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-
 import { useCtxt } from "../../context/authContext/userContext";
 import { AppDispatch } from "../../lib";
-import { fetchWeatherData } from "../../lib/action";
+import { fetchWeatherData } from "../../lib/action/weatherAction";
+import { getCookie } from "typescript-cookie";
 
-// {
-//   unit,
-//   setUnit,
-// }: {
-//   unit: string;
-//   setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
-// }
 const Navbar = () => {
   const { t, i18n } = useTranslation();
-    const { user } = useCtxt();
- const [city, setCity] = useState<string>(user?.city || "");
- const dispatch = useDispatch<AppDispatch>();
- const loadWeatherData = (city: string) => {
-   dispatch(fetchWeatherData({ city }));
- };
- useEffect(() => {
-   //  loadWeatherData(city)
-   if (city) {
-     loadWeatherData(city); // Fetch weather data when city is set
-   }
- }, [city]);
+  const { user } = useCtxt(); // Get the logged-in user
+  const [city, setCity] = useState<string>(user?.city || ""); // Use empty string initially for input state
+  const dispatch = useDispatch<AppDispatch>();
+  const token = getCookie("auth_token"); // Get auth token from cookies
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (city) {
+  console.log("Token:", token); // Debugging token
+
+  // Function to load weather data based on city and token
+  const loadWeatherData = (city: string) => {
+    if (token && city) {
       dispatch(fetchWeatherData({ city }));
-  }
+      console.log(`Weather data fetched for city: ${city}`);
+    } else {
+      console.warn("City or token is missing, cannot load weather data.");
+    }
+  };
+
+  // Load weather data if city and token are available (on initial mount or when city changes)
+  useEffect(() => {
+    if (token && city) {
+      loadWeatherData(city); // Automatically fetch weather for the logged-in user's city on load
+    }
+  }, []); // Token is added as a dependency to ensure proper effect
+
+  // Function to handle the form 
   
-}
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent form from refreshing the page
 
-  // const toggleUnit = () => {
-  //   setUnit((prevUnit: string) =>
-  //     prevUnit === "metric" ? "imperial" : "metric"
-  //   );
-  // };
+    if (city) {
+      console.log("Searching for city:", city); // Debugging city value before dispatch
 
+      try {
+        // dispatch(fetchWeatherData({ city })); // Dispatch action to fetch weather data for searched city
+        loadWeatherData(city);
+        console.log("Dispatch successful for city:", city);
+      } catch (error) {
+        console.error("Error during dispatch:", error); // Log errors if dispatch fails
+      }
+    } else {
+      console.warn("City is empty, cannot fetch weather data."); // Handle empty city scenario
+    }
+  };
+
+  // Function to change language using react-i18next
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
@@ -50,30 +61,29 @@ const Navbar = () => {
     <nav className="border-b border-gray-200 w-full">
       <div className="max-w-screen-x flex md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
-        <div className="relativ flex items-center">
+        <div className="relative flex items-center">
           <form onSubmit={handleSearch}>
             <div className="flex items-center w-full">
               <input
                 type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                // value={city}
+                onChange={(e) => setCity(e.target.value)} // Update the city state on input change
                 className="p-2 border rounded-l h-9 w-full text-black"
-                placeholder={t("Search for a city...")}
+                placeholder={t("Search for a city...")} // Translation for placeholder text
               />
               <button
                 type="submit"
                 className="p-[0.35rem] bg-blue-500 text-white rounded-r">
-                {t("Search")}
+                {t("Search")} {/* Translation for button text */}
               </button>
             </div>
           </form>
         </div>
 
-        {/* Unit Toggle and Language Selector */}
+        {/* Language Selector */}
         <div className="flex items-center justify-between gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-ful md:w-auto text-black">
-          {/* Language Selector */}
           <select
-            onChange={(e) => changeLanguage(e.target.value)}
+            onChange={(e) => changeLanguage(e.target.value)} // Change language on select
             className="p-2 border rounded h-9 w-auto md:w-auto" // Full width on mobile, auto on larger screens
           >
             <option value="en">En</option>
@@ -84,28 +94,6 @@ const Navbar = () => {
             <option value="yo">Yo</option>
             <option value="zu">Zu</option>
           </select>
-
-          {/* Unit Toggle */}
-          {/* <div
-            className="flex border rounded-full transition-all duration-300 h-[2rem] w-20 md:w-20 bg-white" // Full width on mobile, fixed width on larger screens
-            onClick={toggleUnit}>
-            <button
-              className={
-                unit === "metric"
-                  ? "bg-white w-1/2 rounded-full uppercase"
-                  : "bg-[#060C1A] w-1/2 rounded-full"
-              }>
-              f
-            </button>
-            <button
-              className={
-                unit === "metric"
-                  ? "bg-[#060C1A] w-1/2 rounded-full"
-                  : "bg-white w-1/2 rounded-full uppercase"
-              }>
-              c
-            </button>
-          </div> */}
         </div>
       </div>
     </nav>

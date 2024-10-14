@@ -3,14 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-import axiosInstance from "../../../api";
+// import axiosInstance from "../../../api";
 import LoginBg from "../../../assets/rainBg.jpg";
 import LoginImg from "../../../assets/reg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
-import { useCtxt } from "../../../context/authContext/userContext";
+// import { useCtxt } from "../../../context/authContext/userContext";
 import { LoginFormValues } from "../../../types";
 import { ArrowFatLeft } from "@phosphor-icons/react";
+import { LoginAction } from "../../../lib/action/authAction";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../lib";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -24,7 +27,8 @@ const validationSchema = Yup.object().shape({
 
 const Login: React.FC = () => {
   const navigate = useNavigate(); // Initialize navigate for redirection
-  const authContext = useCtxt(); // Access AuthContext
+  // const authContext = useCtxt(); // Access AuthContext
+  const dispatch: AppDispatch = useDispatch();
 
   // Initial form values
   const initialValues: LoginFormValues = {
@@ -60,27 +64,14 @@ const Login: React.FC = () => {
               values: LoginFormValues,
               { setSubmitting }: FormikHelpers<LoginFormValues>
             ) => {
-              try {
-                const res = await axiosInstance.post("/login", values);
-                console.log(res);
+              const res = await dispatch(LoginAction(values));
+              // console.log(res);
 
-                if (res?.data.success === true) {
-                  toast.success(res?.data?.message);
-
-                  // Log the user in by calling the context's login method
-                  authContext?.login(
-                    res?.data?.payload.token,
-                    res?.data?.payload.user
-                  ); // Assuming API returns token and user data
-
-                  // Redirect to dashboard
-                  navigate("/dashboard");
-                } else {
-                  toast.error(res?.data?.message);
-                }
-              } catch (error) {
-                toast.error("Login failed. Please try again.");
-                console.log(error);
+              if (res?.success === true) {
+                // toast.success(res?.message);
+                navigate("/dashboard");
+              } else {
+                toast.error(res?.message);
               }
 
               setSubmitting(false); // Reset the submitting state after form submission

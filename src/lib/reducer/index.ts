@@ -2,10 +2,12 @@
 
 import { combineReducers } from "@reduxjs/toolkit";
 
-import weatherSlice from './weatherReducer/index';
+import weatherSlice from './weatherReducer';
+import authSlice from './authReducer'
 
 const rootReducer = combineReducers({
-  weatherSlice
+  weatherSlice,
+  authSlice
 });
 
 export default rootReducer;
