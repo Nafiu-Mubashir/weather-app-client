@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { FileText, House, MapTrifold, SignOut } from "@phosphor-icons/react";
 
-import { AppDispatch, RootState } from "../../lib";
+import { AppDispatch } from "../../lib";
 import { LogoutAction } from "../../lib/action/authAction";
 
 // Define the NavLink interface
