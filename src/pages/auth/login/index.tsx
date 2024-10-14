@@ -1,19 +1,30 @@
 import { Form, Formik, FormikHelpers } from "formik";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-// import axiosInstance from "../../../api";
+import { ArrowFatLeft } from "@phosphor-icons/react";
+
 import LoginBg from "../../../assets/rainBg.jpg";
 import LoginImg from "../../../assets/reg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
-// import { useCtxt } from "../../../context/authContext/userContext";
-import { LoginFormValues } from "../../../types";
-import { ArrowFatLeft } from "@phosphor-icons/react";
-import { LoginAction } from "../../../lib/action/authAction";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../lib";
+import { LoginAction } from "../../../lib/action/authAction";
+import { LoginFormValues } from "../../../types";
+
+// import axiosInstance from "../../../api";
+
+
+
+
+// import { useCtxt } from "../../../context/authContext/userContext";
+
+
+
+
+
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -41,10 +52,10 @@ const Login: React.FC = () => {
       className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat relative"
       style={{ backgroundImage: `url(${LoginBg})` }}>
       <Link to={"/"}>
-        <button className="absolute bg-white top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
+        <button className="absolute bg-green-500 top-2 md:top-5 left-4 md:left-10 p-1 md:p-2 px-3 md:px-5 rounded flex gap-2 items-center">
           <ArrowFatLeft
             size={26}
-            color="#3e3d3b"
+            color="white"
             weight="fill"
           />
           {/* Back */}
@@ -115,11 +126,11 @@ const Login: React.FC = () => {
             )}
           </Formik>
 
-          <p className="text-white text-center">
-            I do not have an account;{" "}
+          <p className="text-white text-center text-sm md:text-lg">
+            I do not have an account?{" "}
             <Link
               to="/auth/registration"
-              className="text-yellow-500 underline">
+              className="text-green-500 underline">
               Create an account
             </Link>
           </p>

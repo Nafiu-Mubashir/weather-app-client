@@ -14,18 +14,16 @@ const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const token = getCookie("auth_token"); // Get auth token from cookies
 
-  console.log("Token:", token); // Debugging token
+  // console.log("Token:", token); // Debugging token
 
   // Function to load weather data based on city and token
   const loadWeatherData = (city: string) => {
     if (token && city) {
-      dispatch(fetchWeatherData({ city }));
-      console.log(`Weather data fetched for city: ${city}`);
-    } else {
-      console.warn("City or token is missing, cannot load weather data.");
-    }
+      dispatch(fetchWeatherData({city}));
+    } 
   };
 
+  
   // Load weather data if city and token are available (on initial mount or when city changes)
   useEffect(() => {
     if (token && city) {
@@ -39,12 +37,12 @@ const Navbar = () => {
     event.preventDefault(); // Prevent form from refreshing the page
 
     if (city) {
-      console.log("Searching for city:", city); // Debugging city value before dispatch
+      // console.log("Searching for city:", city); // Debugging city value before dispatch
 
       try {
         // dispatch(fetchWeatherData({ city })); // Dispatch action to fetch weather data for searched city
         loadWeatherData(city);
-        console.log("Dispatch successful for city:", city);
+        // console.log("Dispatch successful for city:", city);
       } catch (error) {
         console.error("Error during dispatch:", error); // Log errors if dispatch fails
       }
@@ -74,7 +72,7 @@ const Navbar = () => {
               />
               <button
                 type="submit"
-                className="p-[0.35rem] bg-blue-500 text-white rounded-r">
+                className="p-[0.35rem] bg-green-500 text-white rounded-r">
                 {t("Search")} {/* Translation for button text */}
               </button>
             </div>

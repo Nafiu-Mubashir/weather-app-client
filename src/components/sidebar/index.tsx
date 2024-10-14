@@ -17,9 +17,9 @@ interface NavLink {
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const whenActive = location.pathname;
-    // const { isLoggedIn } = useSelector(
-    //   (state: RootState) => state.authSlice
-    // ); 
+  // const { isLoggedIn } = useSelector(
+  //   (state: RootState) => state.authSlice
+  // );
 
   const mainNavlink: NavLink[] = [
     {
@@ -54,27 +54,27 @@ const Sidebar: React.FC = () => {
       path: "/dashboard/map",
     },
   ];
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const logUserOut = () => {
-    dispatch(LogoutAction())
+    dispatch(LogoutAction());
     navigate("/auth/login");
   };
 
   return (
     <aside
-      className={`bg-gray-800/50 p-2 lg:p-4  flex flex-row lg:flex-col items-center justify-between lg:h-screen lg:w-[15%] w-full h-auto lg:border-r border-b`}>
+      className={`bg-gray-800/50 p-2 lg:p-4 flex flex-row lg:flex-col items-center justify-between  lg:h-screen lg:w-[15%] w-full h-auto lg:border-r border-b`}>
       <div className="lg:space-y-4 w-full">
-        <div className="flex flex-row lg:flex-col gap-1 lg:mt-4 w-full justify-around lg:justify-start">
+        <div className="flex flex-row lg:flex-col gap-12 lg:mt-4 w-full lg:gap-2 lg:justify-start">
           {mainNavlink.map((item, index) => {
             const isActive = whenActive === item.path;
             return (
               <div
                 key={index}
-                className="w-full lg:w-auto">
+                className="w-ful lg:w-auto">
                 <div
-                  className={`flex items-center justify-between gap-4 p-2 rounded group cursor-pointer w-full ${
+                  className={`flex bg-green-500 items-center justify-between gap-4 p-2 rounded group cursor-pointer w-ful ${
                     isActive ? "bg-ihsan" : ""
                   }`}>
                   <Link
@@ -84,7 +84,7 @@ const Sidebar: React.FC = () => {
                       {item.icon}
                     </div>
                     <p
-                      className={`text-sm ${
+                      className={`text-sm hidden md:block ${
                         isActive ? "text-urise-main" : "text-white"
                       }`}>
                       {item.name}
@@ -96,16 +96,14 @@ const Sidebar: React.FC = () => {
           })}
         </div>
       </div>
-      <div className={`cursor-pointer hidden md:block  w-full`}>
-        <p
-          className={`flex gap-1 items-center cursor-pointer lg:justify-start`}
-          onClick={logUserOut}>
-          <SignOut
-            size={20}
-            color="white"
-          />
-          Logout
-        </p>
+      <div
+        className={`flex bg-green-500 gap-1 items-center cursor-pointer lg:justify-start w-ful lg:w-full rounded p-2`}
+        onClick={logUserOut}>
+        <SignOut
+          size={20}
+          color="white"
+        />
+        <p className={`hidden md:block`}>Logout</p>
       </div>
     </aside>
   );

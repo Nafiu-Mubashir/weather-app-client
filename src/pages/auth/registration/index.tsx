@@ -41,13 +41,15 @@ const Registration: React.FC = () => {
 
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-auto md:h-screen relative"
+      className="bg-cover bg-center bg-no-repeat flex md:justify-center items-center h-screen relative"
       style={{ backgroundImage: `url(${RegBg})` }}>
-      <Link to={"/"}>
-        <button className="absolute bg-white top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
+      <Link
+        to={"/"}
+        className=" hidden md:block">
+        <button className="absolute bg-green-500 top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
           <ArrowFatLeft
             size={26}
-            color="#3e3d3b"
+            color="white"
             weight="fill"
           />
           {/* Back */}
@@ -151,11 +153,11 @@ const Registration: React.FC = () => {
               </Form>
             )}
           </Formik>
-          <p className="text-white text-center">
+          <p className="text-white text-center text-sm md:text-lg">
             Already have an account?{" "}
             <Link
               to="/auth/login"
-              className="text-[#D13900] underline">
+              className="text-green-500 underline">
               Login
             </Link>
           </p>

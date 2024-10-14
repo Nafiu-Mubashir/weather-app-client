@@ -67,25 +67,27 @@ const DailyForecast: React.FC<DailyForecastProps> = ({ forecast }) => {
   return (
     <div className="daily-forecast-container">
       <h2 className="text-xl font-bold mb-4">Daily Forecast</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 text-center">
         {dailyForecast.map((day, index) => (
           <div
             key={index}
-            className="forecast-day bg-gray-800 text-white p-4 rounded-lg">
-            <h3 className="text-lg font-bold">{day.dayOfWeek.slice(0, 3)}</h3>
-            <p>{day.date}</p>
+            className="grid grid-cols-3 items-center bg-gray-800 text-white p-2 rounded-lg">
+            <div>
+              <h3 className="text-l font-bold">{day.dayOfWeek.slice(0, 3)}</h3>
+              {/* <p>{day.date}</p> */}
+            </div>
+            <p className="text-center capitalize">{day.weatherDescription}</p>
+            {/* <p className="text-center text-sm">
+              <span>Min: {Math.round(day.minTemp)}°C</span> |{" "}
+              <span>Max: {Math.round(day.maxTemp)}°C</span>{" "}
+            </p> */}
+              {/* Converting from Kelvin to Celsius */}
+            {/* <p className="text-center mt-2">Time: {day.time}</p> */}
             <img
               src={day.weatherIcon}
               alt={day.weatherDescription}
-              className="h-12 mx-auto my-2"
+              className="h-[rem] mx-auto my-2"
             />
-            <p className="text-center capitalize">{day.weatherDescription}</p>
-            <p className="text-center text-sm">
-              <span>Min: {Math.round(day.minTemp)}°C</span> |{" "}
-              <span>Max: {Math.round(day.maxTemp)}°C</span>{" "}
-              {/* Converting from Kelvin to Celsius */}
-            </p>
-            <p className="text-center mt-2">Time: {day.time}</p>
           </div>
         ))}
       </div>
