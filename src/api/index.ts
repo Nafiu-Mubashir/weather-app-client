@@ -3,8 +3,8 @@ import { getCookie } from "typescript-cookie";
 
 // Create an Axios instance
 const axiosInstance: Axios = axios.create({
-  baseURL: "https://weather-auth-app-backend.vercel.app/api/",
-  timeout: 10000,
+  baseURL: "https://weather-auth-app-backend.vercel.app/api",
+  // timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -19,8 +19,8 @@ axiosInstance.interceptors.request.use(
     }
     // Ensure no caching
     // config.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
-    config.headers["Pragma"] = "no-cache";
-    config.headers["Expires"] = "0";
+    // config.headers["Pragma"] = "no-cache";
+    // config.headers["Expires"] = "0";
     return config;
   },
   (error: AxiosError) => {

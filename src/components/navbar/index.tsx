@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { getCookie } from "typescript-cookie";
+
 import { useCtxt } from "../../context/authContext/userContext";
 import { AppDispatch } from "../../lib";
 import { fetchWeatherData } from "../../lib/action/weatherAction";
-import { getCookie } from "typescript-cookie";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();

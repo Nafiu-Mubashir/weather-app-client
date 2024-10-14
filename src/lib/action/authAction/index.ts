@@ -1,16 +1,17 @@
 // /src/lib/action/authAction/index.tsx
 
-import { removeCookie, setCookie } from "typescript-cookie";
-import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { removeCookie, setCookie } from "typescript-cookie";
+
+import axiosInstance from "../../../api";
 import {
   AuthRes,
   LoginFormValues,
   RegistrationFormValues,
 } from "../../../types";
+import { authFailure, authSuccess, authUser, logout } from "../../reducer/authReducer";
 import { AppDispatch, AppThunk } from "../..";
-import axiosInstance from "../../../api";
-import { authUser, authSuccess, authFailure, logout } from "../../reducer/authReducer";
 
 export const LoginAction =
   (values: LoginFormValues) =>
@@ -53,7 +54,7 @@ export const LoginAction =
     }
   };
 
-export const SignUpAction =
+export const RegAction =
   (values: RegistrationFormValues) =>
   async (dispatch: AppDispatch): Promise<AuthRes | undefined> => {
     try {

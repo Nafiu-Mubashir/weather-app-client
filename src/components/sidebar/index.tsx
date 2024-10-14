@@ -1,9 +1,10 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { FileText, House, MapTrifold, SignOut } from "@phosphor-icons/react";
+
+import { AppDispatch, RootState } from "../../lib";
 import { LogoutAction } from "../../lib/action/authAction";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../lib";
 
 // Define the NavLink interface
 interface NavLink {
@@ -16,6 +17,9 @@ interface NavLink {
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const whenActive = location.pathname;
+    // const { isLoggedIn } = useSelector(
+    //   (state: RootState) => state.authSlice
+    // ); 
 
   const mainNavlink: NavLink[] = [
     {

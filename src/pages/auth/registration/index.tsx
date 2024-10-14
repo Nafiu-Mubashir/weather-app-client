@@ -1,15 +1,18 @@
-import { Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Form, Formik, FormikHelpers } from "formik";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-import axiosInstance from "../../../api";
-import RegBg from "../../../assets/sunBg.jpg";
+import { ArrowFatLeft } from "@phosphor-icons/react";
+
 import LoginImg from "../../../assets/login.jpg";
+import RegBg from "../../../assets/sunBg.jpg";
 import Button from "../../../components/button";
 import Input from "../../../components/input";
+import { AppDispatch } from "../../../lib";
+import { RegAction } from "../../../lib/action/authAction";
 import { RegistrationFormValues } from "../../../types";
-import { ArrowFatLeft } from "@phosphor-icons/react";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -25,6 +28,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const Registration: React.FC = () => {
+    const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
   // Initial values for the form
   const initialValues: RegistrationFormValues = {
     firstName: "",
@@ -67,14 +72,28 @@ const Registration: React.FC = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={async (values) => {
-              const res = await axiosInstance.post("/register", values);
-              // console.log(res); // Stop submitting state
-              if (res?.data.success === true) {
-                toast.success(res?.data?.message);
+            onSubmit={async (
+              values: RegistrationFormValues,
+              { setSubmitting }: FormikHelpers<RegistrationFormValues>
+            ) => {
+              const res = await dispatch(RegAction(values));
+              // console.log(res);
+
+              if (res?.success === true) {
+                // toast.success(res?.message);
+                navigate("/login");
               } else {
-                toast.error(res?.data?.message);
+                toast.error(res?.message);
               }
+
+              setSubmitting(false); // Reset the submitting state after form submission
+              // const res = await axiosInstance.post("/register", values);
+              // // console.log(res); // Stop submitting state
+              // if (res?.data.success === true) {
+              //   toast.success(res?.data?.message);
+              // } else {
+              //   toast.error(res?.data?.message);
+              // }
             }}>
             {({ errors, getFieldProps, isSubmitting }) => (
               <Form className="space-y- text-white">
