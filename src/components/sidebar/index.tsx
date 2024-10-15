@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -17,9 +18,7 @@ interface NavLink {
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const whenActive = location.pathname;
-  // const { isLoggedIn } = useSelector(
-  //   (state: RootState) => state.authSlice
-  // );
+  const { t } = useTranslation(); // Use the translation hook
 
   const mainNavlink: NavLink[] = [
     {
@@ -29,7 +28,7 @@ const Sidebar: React.FC = () => {
           color="white"
         />
       ),
-      name: "Dashboard",
+      name: t("dashboard"), // Translate the "Dashboard" text
       path: "/dashboard",
     },
     {
@@ -39,7 +38,7 @@ const Sidebar: React.FC = () => {
           color="white"
         />
       ),
-      name: "History",
+      name: t("history"), // Translate the "History" text
       path: "/dashboard/history",
     },
     {
@@ -49,7 +48,7 @@ const Sidebar: React.FC = () => {
           color="white"
         />
       ),
-      name: "Map",
+      name: t("map"), // Translate the "Map" text
       digit: "10",
       path: "/dashboard/map",
     },
@@ -84,7 +83,7 @@ const Sidebar: React.FC = () => {
                       {item.icon}
                     </div>
                     <p
-                      className={`text-sm hidden md:block ${
+                      className={`text-sm hidden md:block capitalize ${
                         isActive ? "text-urise-main" : "text-white"
                       }`}>
                       {item.name}
@@ -103,7 +102,8 @@ const Sidebar: React.FC = () => {
           size={20}
           color="white"
         />
-        <p className={`hidden md:block`}>Logout</p>
+        <p className={`hidden md:block`}>{t("logout")}</p>{" "}
+        {/* Translate "Logout" */}
       </div>
     </aside>
   );

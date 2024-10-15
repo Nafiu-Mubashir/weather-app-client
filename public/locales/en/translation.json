@@ -32,5 +32,14 @@
   "few clouds": "Few Clouds",
   "Weather Data": "Weather Data",
   "location": "Location",
-  "Afro-centric Weather App": "Afro-centric Weather App"
+  "Afro-centric Weather App": "Afro-centric Weather App",
+  "dashboard": "Dashboard",
+  "map": "Map",
+  "history": "History",
+  "logout": "Logout",
+  "sunrise": "Sunrise",
+  "sunset": "Sunset",
+  "length_of_day": "Length of Day",
+  "low": "Low",
+  "high": "High"
 }

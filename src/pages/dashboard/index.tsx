@@ -11,6 +11,8 @@ import {
 
 import DailyForecast from "../../components/forcastDetails";
 import { RootState } from "../../lib";
+import AirPollutionChart from "./component/airPollutionChart";
+import TemperatureDonutChart from "./component/temperatureChart";
 
 const Dashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -18,14 +20,15 @@ const Dashboard: React.FC = () => {
   const [sunriseTime, setSunriseTime] = useState<string>("");
   const [sunsetTime, setSunsetTime] = useState<string>("");
   const [dayLength, setDayLength] = useState<string>("");
+
+  const { weatherData } = useSelector((state: RootState) => state.weatherSlice);
+  console.log(weatherData);
+
   // Function to convert Unix timestamp to human-readable time, accounting for the timezone offset
   const formatTime = (timestamp: number, timezoneOffset: number) => {
     const date = new Date((timestamp + timezoneOffset) * 1000); // Adjust for timezone offset
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
-
-  const { weatherData } = useSelector((state: RootState) => state.weatherSlice);
-  console.log(weatherData);
 
   useEffect(() => {
     if (weatherData?.weatherData) {
@@ -51,11 +54,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-[90] text-white p-2 md:p-4 flex flex-col md:flex-row justify-center">
-      {/* Main Dashboard */}
       <div className="flex-grow md:ml-4 space-y-4">
-        {/* Top Section */}
         <div className="flex flex-col lg:flex-row gap-4">
-          {/* Current Weather */}
           <div className="space-y-3 lg:w-[60%]">
             <div className="bg-gray-800/50 p-6 rounded-lg">
               <div className="flex justify-between">
@@ -63,7 +63,7 @@ const Dashboard: React.FC = () => {
                   <MapPinLine
                     size={20}
                     color="#eeeae3"
-                    className="block md:hidde"
+                    className=""
                   />
                   <h2 className="text-md">
                     {weatherData?.weatherData.currentWeather.name},{" "}
@@ -76,15 +76,15 @@ const Dashboard: React.FC = () => {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <div>
-                  <h1 className="text-2xl tex-3xl lg:text-6xl font-bold">
+                  <h1 className="text-2xl lg:text-6xl font-bold">
                     {weatherData?.weatherData.currentWeather.main.feels_like} °C
                   </h1>
                   <div className="flex flex-col md:flex-row md:gap-2 text-xs">
-                    <p className="text-xs">
+                    <p>
                       Low:{" "}
                       {weatherData?.weatherData.currentWeather.main.temp_min} °C
                     </p>
-                    <p className="text-xs">
+                    <p>
                       High:{" "}
                       {weatherData?.weatherData.currentWeather.main.temp_max} °C
                     </p>
@@ -112,7 +112,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="bg-gray-800/50 p-6 rounded-lg">
-              <h3 className="text-xl mb-4">Today Highlight</h3>
+              <h3 className="text-xl mb-4">{t("Today Highlight")}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="bg-gray-800 p-4 rounded-lg space-y-2">
                   <p> {t("Temperature")}</p>
@@ -130,7 +130,7 @@ const Dashboard: React.FC = () => {
                       className="hidden md:block"
                     />
                     <h3 className="text-3xl font-bold">
-                      {weatherData?.weatherData.currentWeather.main.feels_like.toFixed()}
+                      {weatherData?.weatherData.currentWeather.main.feels_like.toFixed()}{" "}
                       °C
                     </h3>
                   </div>
@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
                       className="hidden md:block"
                     />
                     <h3 className="text-3xl font-bold">
-                      {weatherData?.weatherData.currentWeather.main.humidity.toFixed()}
+                      {weatherData?.weatherData.currentWeather.main.humidity.toFixed()}{" "}
                       %
                     </h3>
                   </div>
@@ -172,7 +172,7 @@ const Dashboard: React.FC = () => {
                       className="hidden md:block"
                     />
                     <h3 className="text-3xl font-bold">
-                      {weatherData?.weatherData.currentWeather.wind.speed.toFixed()}
+                      {weatherData?.weatherData.currentWeather.wind.speed.toFixed()}{" "}
                       m/s
                     </h3>
                   </div>
@@ -181,7 +181,7 @@ const Dashboard: React.FC = () => {
                   <p>{t("Pressure")}</p>
                   <div className=" flex items-center justify-between">
                     <h3 className="text-2xl font-bold">
-                      {weatherData?.weatherData.currentWeather.main.pressure.toFixed()}
+                      {weatherData?.weatherData.currentWeather.main.pressure.toFixed()}{" "}
                       hPa
                     </h3>
                   </div>
@@ -190,8 +190,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Weather Highlights */}
-          <div className=" lg:w-[40%] space-y-3">
+          <div className="lg:w-[40%] space-y-3">
             <div className="bg-gray-800/50 p-6 rounded-lg">
               <DailyForecast
                 forecast={weatherData?.weatherData.forecast || []}
@@ -205,23 +204,39 @@ const Dashboard: React.FC = () => {
           <h3 className="text-xl mb-4">Today Highlight</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-              air pollution
+              {/* Air Pollution Chart */}
+              {weatherData?.weatherData.airPollution?.list[0] ? (
+                <AirPollutionChart
+                  airPollution={weatherData.weatherData.airPollution.list[0]}
+                />
+              ) : (
+                <p>No air pollution data available.</p>
+              )}
             </div>
             <div className="space-y-2">
+              {/* Add a check to ensure temperatureData exists before rendering */}
               <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-                <p>
-                  {t("Sunrise")}: {sunriseTime}
+                {weatherData?.weatherData.currentWeather?.main && (
+                  <TemperatureDonutChart
+                    temperatureData={
+                      weatherData.weatherData.currentWeather.main
+                    }
+                  />
+                )}
+              </div>
+              <div className="bg-gray-800 p-4 rounded-lg space-y-2">
+                <p className="capitalize">
+                  {t("sunrise")}: {sunriseTime}
                 </p>
               </div>
               <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-                <p>
-                  {t("Sunset")}: {sunsetTime}
+                <p className="capitalize">
+                  {t("sunset")}: {sunsetTime}
                 </p>
               </div>
-
               <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-                <p>
-                  {t("Length of Day")}: {dayLength}
+                <p className="capitalize">
+                  {t("length of day")}: {dayLength}
                 </p>
               </div>
             </div>

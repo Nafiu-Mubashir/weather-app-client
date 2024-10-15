@@ -32,5 +32,14 @@
   "few clouds": "Mawingu machache",
   "weather data": "Taarifa ya Hali ya Hewa",
   "location": "Mahali",
-  "Afro-centric Weather App": "Programu ya Hali ya Hewa ya Afro-centric"
+  "Afro-centric Weather App": "Programu ya Hali ya Hewa ya Afro-centric",
+  "dashboard": "Dashibodi",
+  "map": "Ramani",
+  "history": "Historia",
+  "logout": "Ondoka",
+  "sunrise": "Macho ya jua",
+  "sunset": "Kutua kwa jua",
+  "length_of_day": "Urefu wa siku",
+  "low": "Chini",
+  "high": "Juu"
 }

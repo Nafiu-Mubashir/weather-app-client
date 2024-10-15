@@ -32,5 +32,14 @@
   "few clouds": "Gajimare kadan",
   "weather data": "Bayanan Yanayi",
   "location": "Wuri",
-  "Afro-centric Weather App": "Manhajar Yanayi ta Afro-centric"
+  "Afro-centric Weather App": "Manhajar Yanayi ta Afro-centric",
+  "dashboard": "Dashbodi",
+  "map": "Taswira",
+  "history": "Tarihi",
+  "logout": "Fita",
+  "sunrise": "Fitar rana",
+  "sunset": "Fadawar rana",
+  "length_of_day": "Tsawon rana",
+  "low": "Kasa",
+  "high": "Sama"
 }

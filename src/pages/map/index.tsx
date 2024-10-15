@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 
 import { RootState } from "../../lib"; // Import the root state from your store
 
 const mapContainerStyle = {
   width: "100%", // Full-width container
-  height: "400px", // Fixed height for the map
+  height: "500px", // Increased height for the map
 };
 
 const WeatherMap: React.FC = () => {
@@ -25,11 +30,15 @@ const WeatherMap: React.FC = () => {
       }
     : defaultPosition;
 
-  // Log user position for debugging purposes
-  console.log("User position: ", userPosition);
+  // Extract city name from weatherData
+  const locationName =
+    weatherData?.weatherData?.currentWeather?.name || "Unknown Location";
+
+  // State for handling the info window visibility
+  const [showInfoWindow, setShowInfoWindow] = useState(true);
 
   return (
-    <div className="mt-6 p-3">
+    <div className="mt- p-3">
       <h3 className="text-xl font-semibold mb-4">Weather Map</h3>
 
       {/* Load Google Maps with API Key */}
@@ -40,7 +49,24 @@ const WeatherMap: React.FC = () => {
           center={userPosition} // Center map on user's position or default
         >
           {/* Marker placed at the user's location */}
-          <Marker position={userPosition} />
+          <Marker
+            position={userPosition}
+            onClick={() => setShowInfoWindow(!showInfoWindow)} // Toggle info window on marker click
+          />
+
+          {showInfoWindow && (
+            <InfoWindow
+              position={userPosition}
+              onCloseClick={() => setShowInfoWindow(false)} // Close info window on clicking "x"
+            >
+              <div>
+                <h4>{locationName}</h4>
+                <p>
+                  Lat: {userPosition.lat}, Lng: {userPosition.lng}
+                </p>
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </LoadScript>
     </div>

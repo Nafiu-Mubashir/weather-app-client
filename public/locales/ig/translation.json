@@ -32,5 +32,14 @@
   "few clouds": "Ihu igwe ole na ole",
   "weather data": "Data ihu igwe",
   "location": "Ebe",
-  "Afro-centric Weather App": "Ngwa Oge Ọdụdụ-centri"
+  "Afro-centric Weather App": "Ngwa Oge Ọdụdụ-centri",
+  "dashboard": "Ngwaọrụ",
+  "map": "Mba akwụkwọ",
+  "history": "Akụkọ ihe mere eme",
+  "logout": "Pụọ",
+  "sunrise": "Mmiri anwụ",
+  "sunset": "Nchụpụ anwụ",
+  "length_of_day": "Ogologo ụbọchị",
+  "low": "Ala",
+  "high": "Elu"
 }

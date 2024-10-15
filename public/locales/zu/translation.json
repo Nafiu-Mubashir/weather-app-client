@@ -31,5 +31,14 @@
   "heavy_intensity_rain": "Imvula enamandla",
   "clear_sky": "Izulu elikhanyayo",
   "few_clouds": "Amanye amafu",
-  "location": "Indawo"
+  "location": "Indawo",
+  "dashboard": "Ibhodi",
+  "map": "Imephu",
+  "history": "Umlando",
+  "logout": "Phuma",
+  "sunrise": "Ukuphuma kwelanga",
+  "sunset": "Ukushona kwelanga",
+  "length_of_day": "Ubude besikhathi sosuku",
+  "low": "Phansi",
+  "high": "Phezulu"
 }
