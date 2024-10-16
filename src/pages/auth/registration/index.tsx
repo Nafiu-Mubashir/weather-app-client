@@ -45,7 +45,7 @@ const Registration: React.FC = () => {
       style={{ backgroundImage: `url(${RegBg})` }}>
       <Link
         to={"/"}
-        className=" hidden md:block">
+        className="">
         <button className="absolute bg-green-500 top-5 left-10 p-2 px-5 rounded flex gap-2 items-center">
           <ArrowFatLeft
             size={26}
@@ -126,7 +126,7 @@ const Registration: React.FC = () => {
                   errors={errors}
                   {...getFieldProps("city")} // Use Formik's getFieldProps
                 />
-                <div className="">
+                <div className="mb-3">
                   {/* Email Field */}
                   <Input
                     label="Email"

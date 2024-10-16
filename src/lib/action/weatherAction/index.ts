@@ -1,16 +1,20 @@
 import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 
 import axiosInstance from "../../../api";
 import { DashboardResponse } from "../../../types";
 import { fetchWeatherSuccess } from "../../reducer/weatherReducer";
 import { AppDispatch } from "../..";
 
+// import { toast } from "react-toastify";
+
+
+
+
+
+
 export const fetchWeatherData =
   ({ city }: { city: string }) =>
   async (dispatch: AppDispatch): Promise<DashboardResponse | undefined> => {
-    console.log(city);
-
     try {
       const res = await axiosInstance.get("/dashboard", {
         params: { city },
@@ -18,7 +22,7 @@ export const fetchWeatherData =
 
       if (res?.status === 200) {
         dispatch(fetchWeatherSuccess(res.data.payload));
-        toast.success(res?.data?.message);
+        // toast.success(res?.data?.message);
       }
       // console.log(res.data, "data");
       // setResData(data?.data.payload);
@@ -26,7 +30,7 @@ export const fetchWeatherData =
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.log(error);
-        toast.error(error?.message);
+        // toast.error(error?.message);
       }
     }
   };

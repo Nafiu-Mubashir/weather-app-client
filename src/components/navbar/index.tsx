@@ -29,7 +29,7 @@ const Navbar = () => {
     if (token && city) {
       loadWeatherData(city); // Automatically fetch weather for the logged-in user's city on load
     }
-  }, [token, city]); // Token is added as a dependency to ensure proper effect
+  }, [token]); // Token is added as a dependency to ensure proper effect
 
   // Function to handle the form 
   
@@ -57,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="border-b border-gray-200 w-full">
+    <nav className="shadow shadow-slate-300 w-full">
       <div className="max-w-screen-x flex md:flex-row md:items-center justify-between mx-auto p-2 md:p-4 gap-4 md:gap-0">
         {/* Search Input with animation */}
         <div className="relative flex items-center">

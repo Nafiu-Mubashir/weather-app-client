@@ -5,14 +5,24 @@ import { useSelector } from "react-redux";
 import {
   DropHalfBottom,
   MapPinLine,
+  Sun,
   Thermometer,
   Wind,
 } from "@phosphor-icons/react";
+import { SunHorizon } from "@phosphor-icons/react/dist/ssr";
 
+import pressure from "../../assets/pressure.svg";
 import DailyForecast from "../../components/forcastDetails";
 import { RootState } from "../../lib";
 import AirPollutionChart from "./component";
 import TemperatureDonutChart from "./component/temperatureChart";
+
+// import length from "../../assets/length.svg";
+
+
+
+
+
 
 const Dashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -22,7 +32,6 @@ const Dashboard: React.FC = () => {
   const [dayLength, setDayLength] = useState<string>("");
 
   const { weatherData } = useSelector((state: RootState) => state.weatherSlice);
-  console.log(weatherData);
 
   // Function to convert Unix timestamp to human-readable time, accounting for the timezone offset
   const formatTime = (timestamp: number, timezoneOffset: number) => {
@@ -57,7 +66,7 @@ const Dashboard: React.FC = () => {
       <div className="flex-grow md:ml-4 space-y-4">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="space-y-3 lg:w-[60%]">
-            <div className="bg-gray-800/50 p-6 rounded-lg">
+            <div className="bg-gray-800/70 p-6 rounded-lg">
               <div className="flex justify-between">
                 <div className="flex gap-1 items-center bg-green-500 rounded p-1">
                   <MapPinLine
@@ -76,7 +85,7 @@ const Dashboard: React.FC = () => {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <div>
-                  <h1 className="text-2xl lg:text-6xl font-bold">
+                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold">
                     {weatherData?.weatherData.currentWeather.main.feels_like} °C
                   </h1>
                   <div className="flex flex-col md:flex-row md:gap-2 text-xs">
@@ -179,7 +188,11 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="bg-gray-800 p-4 rounded-lg space-y-2">
                   <p>{t("Pressure")}</p>
-                  <div className=" flex items-center justify-between">
+                  <div className="p-3 flex items-center justify-between">
+                    <img
+                      src={pressure}
+                      className="h-16 rounded-full bg-white"
+                    />
                     <h3 className="text-2xl font-bold">
                       {weatherData?.weatherData.currentWeather.main.pressure.toFixed()}{" "}
                       hPa
@@ -224,15 +237,27 @@ const Dashboard: React.FC = () => {
                   />
                 )}
               </div>
-              <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-                <p className="capitalize">
-                  {t("sunrise")}: {sunriseTime}
-                </p>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-lg space-y-2">
-                <p className="capitalize">
-                  {t("sunset")}: {sunsetTime}
-                </p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="bg-gray-800 p-4 rounded-lg space-y-2 flex items-center gap-3">
+                  <SunHorizon
+                    size={32}
+                    color="white"
+                  />
+                  <div>
+                    <p className="capitalize">{t("sunrise")}</p>
+                    <p>{sunriseTime}</p>
+                  </div>
+                </div>
+                <div className="bg-gray-800 p-4 rounded-lg space-y-2 flex items-center gap-3">
+                  <Sun
+                    size={32}
+                    color="white"
+                  />
+                  <div>
+                    <p className="capitalize">{t("sunset")}</p>
+                    <p>{sunsetTime}</p>
+                  </div>
+                </div>
               </div>
               <div className="bg-gray-800 p-4 rounded-lg space-y-2">
                 <p className="capitalize">

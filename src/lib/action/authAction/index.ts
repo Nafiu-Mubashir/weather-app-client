@@ -39,7 +39,7 @@ export const LoginAction =
           })
         );
         // dispatch(authSuccess(response?.data?.message));
-        // toast.success(response?.data?.message);
+        toast.success(response?.data?.message);
       } else {
         dispatch(authFailure(response?.data?.message));
         toast.error(response?.data?.message);
