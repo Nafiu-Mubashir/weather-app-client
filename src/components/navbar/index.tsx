@@ -29,7 +29,7 @@ const Navbar = () => {
     if (token && city) {
       loadWeatherData(city); // Automatically fetch weather for the logged-in user's city on load
     }
-  }, []); // Token is added as a dependency to ensure proper effect
+  }, [token, city]); // Token is added as a dependency to ensure proper effect
 
   // Function to handle the form 
   

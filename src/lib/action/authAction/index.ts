@@ -38,8 +38,8 @@ export const LoginAction =
             token: response?.data?.payload?.token,
           })
         );
-        dispatch(authSuccess(response?.data?.message));
-        toast.success(response?.data?.message);
+        // dispatch(authSuccess(response?.data?.message));
+        // toast.success(response?.data?.message);
       } else {
         dispatch(authFailure(response?.data?.message));
         toast.error(response?.data?.message);
@@ -75,9 +75,9 @@ export const RegAction =
   };
 
 export const LogoutAction = (): AppThunk => (dispatch) => {
-  dispatch(logout);
+  dispatch(logout()); // Dispatch the logout action
   removeCookie("auth_token"); // Remove token from cookies
-  removeCookie("user_data"); // Remove user from cookies
+  removeCookie("user_data"); // Remove user data from cookies
   toast.success("Logout successful, redirecting...");
 };
 

@@ -1,9 +1,6 @@
-// /src/lib/action/reducer/authSlice/index.tsx
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { removeCookie } from "typescript-cookie";
 import { User, UserState } from "../../../types";
-// import { getCookie } from "typescript-cookie";
 
 const initialState: UserState = {
   loading: false,
@@ -34,8 +31,7 @@ const authSlice = createSlice({
     logout(state) {
       state.isLoggedIn = false;
       state.user = null;
-      // removeCookie("auth_token"); // Remove token from cookies
-      // removeCookie("user_data"); // Remove user from cookies
+      state.token = null; // Reset token as well
     },
   },
 });

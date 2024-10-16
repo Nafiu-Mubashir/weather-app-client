@@ -1,4 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import "./index.css";
 

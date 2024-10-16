@@ -11,7 +11,7 @@ import {
 
 import DailyForecast from "../../components/forcastDetails";
 import { RootState } from "../../lib";
-import AirPollutionChart from "./component/airPollutionChart";
+import AirPollutionChart from "./component";
 import TemperatureDonutChart from "./component/temperatureChart";
 
 const Dashboard: React.FC = () => {

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 
+import logo from "../../assets/logo.webp"; // Replace with your logo image link
 import heroBg from "../../assets/mountainBg.jpg"; // Replace with your actual background image
 
 // Image Links (Replace with the actual images once downloaded)
 const sunIcon = "https://yourlink.com/sun-icon.svg";
 const rainIcon = "https://yourlink.com/rain-icon.svg";
-// const logo = "https://yourlink.com/logo.png"; // Replace with your logo image link
+
 
 const HomePage = () => {
   // Hero Section with Navbar
@@ -15,8 +16,8 @@ const HomePage = () => {
       style={{ backgroundImage: `url(${heroBg})` }}>
       {/* Navbar */}
       <nav className="absolute top-0 left-0 w-full p-4 flex justify-between items-center bg-transparent z-20">
-        <div className="flex items-center">
-          {/* <img src={logo} alt="Afro-Weather Logo" className="h-10 md:h-14" /> */}
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="Afro-Weather Logo" className="h-10 md:h-16 rounded-full" />
           <h1 className="text-xl md:text-3xl font-bold text-white">
             Afro-Weather
           </h1>
